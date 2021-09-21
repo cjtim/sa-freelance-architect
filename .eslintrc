@@ -66,7 +66,9 @@
             "avoidEscape": true
           }
         ],
-        "no-param-reassign": "off"
+        "@typescript-eslint/ban-types": "off",
+        "no-param-reassign": "off",
+        "react/no-array-index-key": "off"
       }
     }
   ],

@@ -1,3 +1,4 @@
+import NavBar from '@/components/NavBar'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
@@ -9,6 +10,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <NavBar />
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>

@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable no-shadow */
 import {
   Box,
+  ChakraProps,
   Heading,
   Table,
   Tbody,
@@ -22,8 +22,8 @@ import {
 } from 'react-table'
 import NoDataCaption from './NoDataCaption'
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export interface BaseTableProps<T extends object = {}> {
+export interface BaseTableProps<T extends object = {}>
+  extends Partial<ChakraProps> {
   data: T[]
   columns: Column<T>[]
   pageSizeOptions?: number[]
@@ -33,6 +33,7 @@ export interface BaseTableProps<T extends object = {}> {
 const BaseTable = <T extends object = {}>({
   data,
   columns,
+  ...other
 }: BaseTableProps<T>) => {
   const {
     getTableProps,
@@ -52,14 +53,13 @@ const BaseTable = <T extends object = {}>({
   )
 
   return (
-    <Box bg="white" borderRadius="lg">
+    <Box borderRadius="lg" borderWidth="1px" {...other}>
       <Table {...getTableProps()}>
         {data.length === 0 && <NoDataCaption />}
         <Thead mb={8}>
           {headerGroups.map((headerGroup, index) => (
             <Tr
               {...headerGroup.getHeaderGroupProps()}
-              // eslint-disable-next-line react/no-array-index-key
               key={`theader-tr-${index}`}
             >
               {headerGroup.headers.map((column) => (
@@ -84,14 +84,11 @@ const BaseTable = <T extends object = {}>({
             return (
               <Tr
                 {...row.getRowProps()}
-                // eslint-disable-next-line react/no-array-index-key
                 key={`tbody-tr-${index}`}
-                _hover={{ bg: 'gray.50' }}
                 // eslint-disable-next-line jsx-a11y/aria-role
                 role="addicon"
               >
                 {row.cells.map((cell, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
                   <Td {...cell.getCellProps()} key={`tbody-td-${index}`} py={4}>
                     {cell.render('Cell')}
                   </Td>
