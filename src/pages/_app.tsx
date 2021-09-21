@@ -27,9 +27,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     initalLine().then(() => setLoading(false))
   }, [])
 
-  if (loading)
+  if (typeof window !== 'undefined' && loading)
     return (
-      <Center alignItems="center" height={window.innerHeight || 'max-content'}>
+      <Center alignItems="center" height={window?.innerHeight || 'max-content'}>
         <Spinner size="xl" />
       </Center>
     )

@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import React, { useEffect } from 'react'
 import { Column } from 'react-table'
 import NavBar from '@/components/NavBar'
-import { Box, Container } from '@chakra-ui/react'
+import { Container } from '@chakra-ui/react'
 
 const buyGold1: React.FC = () => {
   const { value } = useAppSelector((state) => state.photos)

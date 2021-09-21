@@ -18,7 +18,7 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"],
-      "@API/*": ["./../api/*"]
+      "@API/*": ["./pages/api/*"]
     }
   },
   "exclude": ["node_modules"],
