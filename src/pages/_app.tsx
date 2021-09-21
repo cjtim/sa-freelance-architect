@@ -2,6 +2,8 @@ import { AppProps } from 'next/app'
 import { ChakraProvider } from '@chakra-ui/react'
 import { theme } from '@/styles/theme'
 import { useEffect } from 'react'
+import { Provider } from 'react-redux'
+import { store } from '@/store'
 
 async function initalLine() {
   const liff = (await import('@line/liff')).default
@@ -18,8 +20,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     initalLine()
   }, [])
   return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <Provider store={store}>
+      <ChakraProvider theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </Provider>
   )
 }

@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express'
 import { getRepository } from 'typeorm'
 import { v4 } from 'uuid'
-import { Photo } from './entity/user'
+import { Photo } from './entity/photo'
 
 const api = Router()
 

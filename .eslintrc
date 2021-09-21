@@ -65,7 +65,8 @@
           {
             "avoidEscape": true
           }
-        ]
+        ],
+        "no-param-reassign": "off"
       }
     }
   ],

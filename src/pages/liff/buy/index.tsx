@@ -1,4 +1,8 @@
 import PageLayout from '@/components/PageLayout'
+import BaseTable from '@/components/Table/BaseTable'
+import { Photo } from '@/pages/api/entity/photo'
+import { fetchPhotos } from '@/slices/photos'
+import { useAppDispatch, useAppSelector } from '@/store/hook'
 import {
   Image,
   Box,
@@ -9,10 +13,25 @@ import {
   HStack,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/dist/client/router'
+import { useEffect } from 'react'
+import { Column } from 'react-table'
 
 const buyGold1: React.FC = () => {
   const router = useRouter()
   const { unit, amount } = router.query
+  const { value } = useAppSelector((state) => state.photos)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchPhotos())
+  }, [dispatch])
+  const columns: Column<Photo>[] = [
+    { Header: 'Name', accessor: 'name' },
+    { Header: 'Desc', accessor: 'description' },
+    { Header: 'filename', accessor: 'filename' },
+    { Header: 'views', accessor: 'views' },
+    { Header: 'Published', accessor: 'isPublished' },
+  ]
   return (
     <PageLayout windowTitle="ซื้อทองคำ">
       <Container>
@@ -30,6 +49,7 @@ const buyGold1: React.FC = () => {
             </HStack>
           </Stack>
         </Box>
+        <BaseTable data={value} columns={columns} />
       </Container>
     </PageLayout>
   )
