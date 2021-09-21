@@ -1,7 +1,7 @@
 import { AppProps } from 'next/app'
-import { ChakraProvider, Spinner } from '@chakra-ui/react'
+import { ChakraProvider, Spinner, Center } from '@chakra-ui/react'
 import { theme } from '@/styles/theme'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Provider } from 'react-redux'
 import { store } from '@/store'
 import backendInstance from '@/lib/axios'
@@ -27,7 +27,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     initalLine().then(() => setLoading(false))
   }, [])
 
-  if (loading) return <Spinner size="xl" />
+  if (loading)
+    return (
+      <Center alignItems="center" height={window.innerHeight || 'max-content'}>
+        <Spinner size="xl" />
+      </Center>
+    )
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>
