@@ -1,5 +1,7 @@
 import { Request, Response, Router } from 'express'
+import { getRepository } from 'typeorm'
 import { v4 } from 'uuid'
+import { Photo } from './entity/user'
 
 const api = Router()
 
@@ -14,4 +16,17 @@ api.get('/item/:slug', (req, res) => {
   res.json({ item: slug })
 })
 
+api.get('/db', async (req, res) => {
+  const repo = getRepository<Photo>('Photo')
+  await repo.insert({
+    name: 'test',
+    description: 'test',
+    filename: 'test.txt',
+    hasId: false,
+    isPublished: false,
+    views: 0,
+  })
+  const all = await repo.find()
+  res.json(all)
+})
 export { api }
