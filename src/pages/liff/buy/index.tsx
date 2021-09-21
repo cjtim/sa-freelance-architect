@@ -1,6 +1,6 @@
 import PageLayout from '@/components/PageLayout'
 import BaseTable from '@/components/Table/BaseTable'
-import { Photo } from '@/pages/api/entity/photo'
+import { Photo } from '@API/entity/photo'
 import { fetchPhotos } from '@/slices/photos'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Container } from '@chakra-ui/react'

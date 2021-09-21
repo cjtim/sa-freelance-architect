@@ -25,7 +25,7 @@ export async function connectDB() {
       password: PSQL_PASSWORD,
       database: PSQL_DATABASE,
       entities,
-      synchronize: true,
+      synchronize: process.env.NODE_ENV !== 'production',
       logging: true,
       name: 'default',
     })

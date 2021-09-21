@@ -1,5 +1,5 @@
 import backendInstance from '@/lib/axios'
-import { Photo } from '@/pages/api/entity/photo'
+import { Photo } from '@API/entity/photo'
 import {
   createAsyncThunk,
   createSlice,

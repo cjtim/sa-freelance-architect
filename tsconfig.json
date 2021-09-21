@@ -17,7 +17,8 @@
     "jsx": "preserve",
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@API/*": ["./../api/*"]
     }
   },
   "exclude": ["node_modules"],
