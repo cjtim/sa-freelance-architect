@@ -1,13 +1,12 @@
 import axios from 'axios'
 
-export async function getAccessToken() {
+const backendInstance = axios.create({})
+
+export async function getLIFFToken() {
   const liff = (await import('@line/liff')).default
   await liff.ready
+  backendInstance.defaults.headers.Authorization = `Bearer ${liff.getAccessToken()}`
   return liff.getAccessToken() || ''
 }
 
-const backendInstance = axios.create({
-  baseURL: process.env.BACKEND_URL || 'http://localhost:8080',
-})
-
-export { backendInstance }
+export default backendInstance

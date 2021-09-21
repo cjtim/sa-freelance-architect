@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import express, { NextFunction, Response, Request } from 'express'
 import { api } from './router'
 import { connectDB } from './repository'
+import LineMiddleware from './middleware/line'
 
 const app = express()
 
@@ -11,7 +12,7 @@ app.use(async (req, res, next) => {
   next()
 })
 
-app.use('/api', api)
+app.use('/api', LineMiddleware.liffVerify, api)
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack)

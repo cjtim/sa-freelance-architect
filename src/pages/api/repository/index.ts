@@ -1,4 +1,5 @@
 import { createConnection, getConnection } from 'typeorm'
+import CONFIG from '../config'
 import { Photo } from '../entity/photo'
 
 const entities = [Photo]
@@ -10,14 +11,19 @@ export async function connectDB() {
       throw Error('No connection')
     }
   } catch (e) {
-    const { DB_HOST, DB_PASSWORD, DB_USER, DB_NAME } = process.env
+    const {
+      PSQL_HOSTNAME,
+      PSQL_PASSWORD,
+      PSQL_USERNAME,
+      PSQL_DATABASE,
+    } = CONFIG
     await createConnection({
       type: 'postgres',
-      host: DB_HOST,
+      host: PSQL_HOSTNAME,
       port: 5432,
-      username: DB_USER,
-      password: DB_PASSWORD,
-      database: DB_NAME,
+      username: PSQL_USERNAME,
+      password: PSQL_PASSWORD,
+      database: PSQL_DATABASE,
       entities,
       synchronize: true,
       logging: true,
