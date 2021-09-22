@@ -1,19 +1,23 @@
 import { Request, Response, Router } from 'express'
 import { getRepository } from 'typeorm'
 import { v4 } from 'uuid'
+import multer from 'multer'
 import { Photo } from './entity/photo'
+import { BucketServices } from './services/bucket'
+
+const forms = multer()
 
 const api = Router()
 
 api.get('/', (req: Request, res: Response) => {
   const path = `/api/item/${v4()}`
   res.setHeader('Content-Type', 'text/html')
-  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`)
+  return res.end(`Hello! Go to item: <a href="${path}">${path}</a>`)
 })
 
 api.get('/item/:slug', (req, res) => {
   const { slug } = req.params
-  res.json({ item: slug })
+  return res.json({ item: slug })
 })
 
 api.get('/db', async (req, res) => {
@@ -27,6 +31,28 @@ api.get('/db', async (req, res) => {
   //   views: 0,
   // })
   const all = await repo.find()
-  res.json(all)
+  return res.json(all)
 })
+
+api.post('/files', forms.any(), async (req, res, next) => {
+  try {
+    const file = (req?.files as Express.Multer.File[])[0]
+    const url = await BucketServices.addBinary(
+      req.user.userId,
+      file.originalname,
+      file.buffer,
+    )
+    console.log(url)
+    return res.send(url)
+  } catch (e) {
+    return next(e)
+  }
+})
+
 export { api }
+export const config = {
+  api: {
+    externalResolver: true,
+    bodyParser: false,
+  },
+}

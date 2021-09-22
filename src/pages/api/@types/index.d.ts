@@ -1,8 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as express from 'express'
+import 'express'
 
 interface IUser {
   userId: string
+  displayName: string
+  pictureUrl: string
 }
 declare global {
   namespace Express {

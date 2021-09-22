@@ -68,7 +68,8 @@
         ],
         "@typescript-eslint/ban-types": "off",
         "no-param-reassign": "off",
-        "react/no-array-index-key": "off"
+        "react/no-array-index-key": "off",
+        "no-shadow": "off"
       }
     }
   ],

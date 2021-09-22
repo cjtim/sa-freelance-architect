@@ -1,6 +1,6 @@
 const CONFIG = {
   BUCKET_NAME: process.env.BUCKET_NAME || '',
-  // FIREBASE_ACC: require('./../firebaseServiceAcc.json'),
+  FIREBASE_ACC: JSON.parse(process.env.FIREBASE_ACC || ''),
   // FIREBASE_DB: process.env.FIREBASE_DB || '',
   LINE_VERIFY_LIFF_TOKEN_API:
     'https://api.line.me/oauth2/v2.1/verify?access_token=',
@@ -13,4 +13,5 @@ const CONFIG = {
   PSQL_USERNAME: process.env.PSQL_USERNAME || '',
   PSQL_PASSWORD: process.env.PSQL_PASSWORD || '',
 }
+
 export default CONFIG
