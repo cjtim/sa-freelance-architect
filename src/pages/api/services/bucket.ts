@@ -5,6 +5,7 @@ import CONFIG from '../config'
 
 const storage = new Storage({
   credentials: CONFIG.FIREBASE_ACC as any,
+  projectId: CONFIG.FIREBASE_ACC.project_id,
 })
 const bucket = storage.bucket(CONFIG.BUCKET_NAME)
 
