@@ -1,7 +1,7 @@
 import PageLayout from '@/components/PageLayout'
 import BaseTable from '@/components/Table/BaseTable'
 import { Photo } from '@API/entity/photo'
-import { fetchPhotos } from '@/slices/photos'
+import { fetchPhotos, uploadFile } from '@/slices/photos'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import React, { useEffect, useState } from 'react'
 import { Column } from 'react-table'
@@ -14,16 +14,19 @@ import {
   Link,
   Text,
 } from '@chakra-ui/react'
-import backendInstance from '@/lib/axios'
 import { AddIcon } from '@chakra-ui/icons'
 
 const buyGold1: React.FC = () => {
-  const { value } = useAppSelector((state) => state.photos)
+  const [file, setFile] = useState<any>(null)
+  const { value, url } = useAppSelector((state) => state.photos)
   const dispatch = useAppDispatch()
-
+  const onUpload = async () => {
+    dispatch(uploadFile(file))
+  }
   useEffect(() => {
     dispatch(fetchPhotos())
   }, [dispatch])
+
   const columns: Column<Photo>[] = [
     { Header: 'ID', accessor: 'id' },
     { Header: 'Name', accessor: 'name' },
@@ -32,15 +35,7 @@ const buyGold1: React.FC = () => {
     { Header: 'views', accessor: 'views' },
     { Header: 'Published', accessor: 'isPublished' },
   ]
-  const [file, setFile] = useState<any>(null)
-  const [url, setUrl] = useState<string>('')
 
-  const onUpload = async () => {
-    const formData = new FormData()
-    formData.append('file', file, file.name)
-    const { data } = await backendInstance.post<string>('/api/files', formData)
-    setUrl(data)
-  }
   return (
     <PageLayout windowTitle="Photos table">
       <NavBar />

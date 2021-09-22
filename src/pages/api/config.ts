@@ -13,5 +13,6 @@ const CONFIG = {
   PSQL_USERNAME: process.env.PSQL_USERNAME || '',
   PSQL_PASSWORD: process.env.PSQL_PASSWORD || '',
 }
-
+console.log(process.env.FIREBASE_ACC)
+console.log(CONFIG.FIREBASE_ACC)
 export default CONFIG

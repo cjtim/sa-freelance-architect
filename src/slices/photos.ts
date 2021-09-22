@@ -12,13 +12,25 @@ import {
 interface PhotoState {
   value: Photo[]
   loading: boolean
+  url: string
 }
 
 // Define the initial state using that type
 const initialState: PhotoState = {
   value: [],
   loading: false,
+  url: '',
 }
+
+export const uploadFile = createAsyncThunk(
+  'photo/uploadFile',
+  async (file: any) => {
+    const formData = new FormData()
+    formData.append('file', file, file.name)
+    const { data } = await backendInstance.post<string>('/api/files', formData)
+    return data
+  },
+)
 
 export const fetchPhotos = createAsyncThunk('photo/fetchPhotos', async () => {
   const { data } = await backendInstance.get<Photo[]>('/api/db')
@@ -37,10 +49,16 @@ export const photoSlice = createSlice({
           state.value = action.payload
         },
       )
-      .addMatcher(isPending(fetchPhotos), (state) => {
+      .addCase(
+        uploadFile.fulfilled.type,
+        (state, action: PayloadAction<string>) => {
+          state.url = action.payload
+        },
+      )
+      .addMatcher(isPending(fetchPhotos, uploadFile), (state) => {
         state.loading = true
       })
-      .addMatcher(isFulfilled(fetchPhotos), (state) => {
+      .addMatcher(isFulfilled(fetchPhotos, uploadFile), (state) => {
         state.loading = false
       })
   },
