@@ -49,8 +49,9 @@ export class BucketServices {
     data: Buffer,
   ): Promise<string> {
     const uuid = uuidv4()
+    const destination = `${parentPath}/${filename}`
     const option: UploadOptions = {
-      destination: parentPath + filename,
+      destination,
       gzip: true,
       metadata: {
         metadata: {
@@ -58,10 +59,10 @@ export class BucketServices {
         },
       },
     }
-    await bucket.file(parentPath + filename).save(data, option)
+    await bucket.file(destination).save(data, option)
     return `https://firebasestorage.googleapis.com/v0/b/${
       bucket.name
-    }/o/${encodeURIComponent(parentPath + filename)}?alt=media&token=${uuid}`
+    }/o/${encodeURIComponent(destination)}?alt=media&token=${uuid}`
   }
 
   static async remove(path: string): Promise<any> {
