@@ -66,6 +66,17 @@ export class BucketServices {
     }/o/${encodeURIComponent(destination)}?alt=media&token=${uuid}`
   }
 
+  static async uploadMetadata(ref: string, uuid: string) {
+    await bucket.file(ref).setMetadata({
+      metadata: {
+        firebaseStorageDownloadTokens: uuid,
+      },
+    })
+    return `https://firebasestorage.googleapis.com/v0/b/${
+      bucket.name
+    }/o/${encodeURIComponent(ref)}?alt=media&token=${uuid}`
+  }
+
   static async remove(path: string): Promise<any> {
     return bucket.file(path).delete()
   }

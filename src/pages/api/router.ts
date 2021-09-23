@@ -42,7 +42,14 @@ api.post('/files', forms.any(), async (req, res, next) => {
       file.originalname,
       file.buffer,
     )
-    console.log(url)
+    return res.send(url)
+  } catch (e) {
+    return next(e)
+  }
+})
+api.put('/files', async (req, res, next) => {
+  try {
+    const url = await BucketServices.uploadMetadata(req.body.ref, req.body.uuid)
     return res.send(url)
   } catch (e) {
     return next(e)

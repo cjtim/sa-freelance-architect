@@ -1,14 +1,27 @@
 import backendInstance from '@/lib/axios'
+
+import { v4 as uuidv4 } from 'uuid'
 import { Photo } from '@API/entity/photo'
 import {
   createAsyncThunk,
   createSlice,
   isFulfilled,
   isPending,
+  isRejected,
   PayloadAction,
 } from '@reduxjs/toolkit'
+import { initializeApp, getApps, getApp } from 'firebase/app'
+import { getStorage, ref, uploadBytes } from 'firebase/storage'
 
-// Define a type for the slice state
+if (!getApps().length) {
+  initializeApp({
+    storageBucket: 'sa-freelance-d880a.appspot.com',
+    projectId: 'sa-freelance-d880a',
+  })
+}
+
+const storage = getStorage(getApp())
+
 interface PhotoState {
   value: Photo[]
   loading: boolean
@@ -25,9 +38,14 @@ const initialState: PhotoState = {
 export const uploadFile = createAsyncThunk(
   'photo/uploadFile',
   async (file: File) => {
-    const formData = new FormData()
-    formData.append('file', file, file.name)
-    const { data } = await backendInstance.post<string>('/api/files', formData)
+    const uuid = uuidv4()
+    const destination = `test/${file.name}`
+    const userRef = ref(storage, destination)
+    await uploadBytes(userRef, file)
+    const { data } = await backendInstance.put<string>('/api/files', {
+      ref: destination,
+      uuid,
+    })
     return data
   },
 )
@@ -59,6 +77,9 @@ export const photoSlice = createSlice({
         state.loading = true
       })
       .addMatcher(isFulfilled(fetchPhotos, uploadFile), (state) => {
+        state.loading = false
+      })
+      .addMatcher(isRejected(fetchPhotos, uploadFile), (state) => {
         state.loading = false
       })
   },
