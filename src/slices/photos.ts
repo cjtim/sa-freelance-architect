@@ -17,11 +17,13 @@ if (!getApps().length) {
   initializeApp({
     storageBucket: 'sa-freelance-d880a.appspot.com',
     projectId: 'sa-freelance-d880a',
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   })
 }
 
+// Get a reference to the storage service, which is used to create references in your storage bucket
 const storage = getStorage(getApp())
-
+// Define a type for the slice state
 interface PhotoState {
   value: Photo[]
   loading: boolean
