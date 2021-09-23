@@ -34,7 +34,7 @@ api.get('/db', async (req, res) => {
 api.get('/files', async (req, res, next) => {
   try {
     const fileRepo = getRepository<Files>('Files')
-    const all = await fileRepo.find()
+    const all = await fileRepo.find({ where: req.user.userId })
     return res.json(all)
   } catch (e) {
     return next(e)
