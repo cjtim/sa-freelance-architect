@@ -23,9 +23,11 @@ app.use(async (req, res, next) => {
 app.use('/api', LineMiddleware.liffVerify, api)
 
 app.use((err: Error, req: Request, res: Response) => {
-  // eslint-disable-next-line no-console
-  console.error(err.stack)
-  return res.status(500).send('Something broke!')
+  if (!res.headersSent) {
+    // eslint-disable-next-line no-console
+    console.error(err.stack)
+    res.sendStatus(500)
+  }
 })
 
 export default app

@@ -1,11 +1,8 @@
 import { Request, Response, Router } from 'express'
 import { getRepository } from 'typeorm'
 import { v4 } from 'uuid'
-import multer from 'multer'
-import { Photo } from './entity/photo'
 import { BucketServices } from './services/bucket'
-
-const forms = multer()
+import { Files } from './entity/files'
 
 const api = Router()
 
@@ -21,7 +18,7 @@ api.get('/item/:slug', (req, res) => {
 })
 
 api.get('/db', async (req, res) => {
-  const repo = getRepository<Photo>('Photo')
+  const repo = getRepository<Files>('Files')
   // await repo.insert({
   //   name: 'test',
   //   description: 'test',
@@ -34,22 +31,25 @@ api.get('/db', async (req, res) => {
   return res.json(all)
 })
 
-api.post('/files', forms.any(), async (req, res, next) => {
+api.get('/files', async (req, res, next) => {
   try {
-    const file = (req?.files as Express.Multer.File[])[0]
-    const url = await BucketServices.addBinary(
-      req.user.userId,
-      file.originalname,
-      file.buffer,
-    )
-    return res.send(url)
+    const fileRepo = getRepository<Files>('Files')
+    const all = await fileRepo.find()
+    return res.json(all)
   } catch (e) {
     return next(e)
   }
 })
 api.put('/files', async (req, res, next) => {
   try {
-    const url = await BucketServices.uploadMetadata(req.body.ref, req.body.uuid)
+    const { ref }: { ref: string } = req.body
+    const url = await BucketServices.uploadMetadata(ref, req.body.uuid)
+    const fileRepo = getRepository<Files>('Files')
+    await fileRepo.insert({
+      lineUid: req.user.userId,
+      url,
+      name: ref.split('/').pop() || ref,
+    })
     return res.send(url)
   } catch (e) {
     return next(e)

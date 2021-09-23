@@ -1,7 +1,6 @@
 import PageLayout from '@/components/PageLayout'
 import BaseTable from '@/components/Table/BaseTable'
-import { Photo } from '@API/entity/photo'
-import { fetchPhotos, uploadFile } from '@/slices/photos'
+import { fetchFiles, uploadFile } from '@/slices/photos'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import React, { useEffect, useState } from 'react'
 import { Column } from 'react-table'
@@ -15,29 +14,39 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
+import { Files } from '../api/entity/files'
 
 const buyGold1: React.FC = () => {
   const [file, setFile] = useState<File>()
-  const { value, url } = useAppSelector((state) => state.photos)
+  const { value } = useAppSelector((state) => state.photos)
   const dispatch = useAppDispatch()
+
   const onUpload = async () => {
-    if (file) dispatch(uploadFile(file))
+    if (file) {
+      dispatch(uploadFile(file))
+      dispatch(fetchFiles())
+    }
   }
   useEffect(() => {
-    dispatch(fetchPhotos())
+    dispatch(fetchFiles())
   }, [dispatch])
 
-  const columns: Column<Photo>[] = [
+  const columns: Column<Files>[] = [
     { Header: 'ID', accessor: 'id' },
     { Header: 'Name', accessor: 'name' },
-    { Header: 'Desc', accessor: 'description' },
-    { Header: 'filename', accessor: 'filename' },
-    { Header: 'views', accessor: 'views' },
-    { Header: 'Published', accessor: 'isPublished' },
+    {
+      Header: 'url',
+      accessor: 'url',
+      Cell: ({ value }) => (
+        <Link href={value} isExternal>
+          <Text>{value}</Text>
+        </Link>
+      ),
+    },
   ]
 
   return (
-    <PageLayout windowTitle="Photos table">
+    <PageLayout windowTitle="Files table">
       <NavBar />
       <Container maxW="container.lg">
         <Flex>
@@ -56,9 +65,7 @@ const buyGold1: React.FC = () => {
             onClick={onUpload}
           />
         </Flex>
-        <Link href={url} isExternal>
-          <Text>{url}</Text>
-        </Link>
+
         <BaseTable data={value} columns={columns} my={4} />
       </Container>
     </PageLayout>

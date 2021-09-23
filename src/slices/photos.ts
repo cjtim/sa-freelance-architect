@@ -1,7 +1,6 @@
 import backendInstance from '@/lib/axios'
 
 import { v4 as uuidv4 } from 'uuid'
-import { Photo } from '@API/entity/photo'
 import {
   createAsyncThunk,
   createSlice,
@@ -13,6 +12,7 @@ import {
 import { initializeApp, getApps, getApp } from 'firebase/app'
 import { getStorage, ref, uploadBytes } from 'firebase/storage'
 import { apiEndpoints, NEXT_CONFIG } from '@/config'
+import { Files } from '@/pages/api/entity/files'
 
 if (!getApps().length) {
   initializeApp({
@@ -25,14 +25,14 @@ if (!getApps().length) {
 // Get a reference to the storage service, which is used to create references in your storage bucket
 const storage = getStorage(getApp())
 // Define a type for the slice state
-interface PhotoState {
-  value: Photo[]
+interface FileState {
+  value: Files[]
   loading: boolean
   url: string
 }
 
 // Define the initial state using that type
-const initialState: PhotoState = {
+const initialState: FileState = {
   value: [],
   loading: false,
   url: '',
@@ -41,8 +41,11 @@ const initialState: PhotoState = {
 export const uploadFile = createAsyncThunk(
   'photo/uploadFile',
   async (file: File) => {
+    const liff = (await import('@line/liff')).default
+    await liff.ready
+    const profile = await liff.getProfile()
     const uuid = uuidv4()
-    const destination = `test/${file.name}`
+    const destination = `${profile.userId}/${file.name}`
     await uploadBytes(ref(storage, destination), file)
     const { data } = await backendInstance.put<string>(apiEndpoints.files, {
       ref: destination,
@@ -52,8 +55,8 @@ export const uploadFile = createAsyncThunk(
   },
 )
 
-export const fetchPhotos = createAsyncThunk('photo/fetchPhotos', async () => {
-  const { data } = await backendInstance.get<Photo[]>(apiEndpoints.photos)
+export const fetchFiles = createAsyncThunk('photo/fetchFiles', async () => {
+  const { data } = await backendInstance.get<Files[]>(apiEndpoints.files)
   return data
 })
 
@@ -64,8 +67,8 @@ export const photoSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(
-        fetchPhotos.fulfilled.type,
-        (state, action: PayloadAction<Photo[]>) => {
+        fetchFiles.fulfilled.type,
+        (state, action: PayloadAction<Files[]>) => {
           state.value = action.payload
         },
       )
@@ -75,13 +78,13 @@ export const photoSlice = createSlice({
           state.url = action.payload
         },
       )
-      .addMatcher(isPending(fetchPhotos, uploadFile), (state) => {
+      .addMatcher(isPending(fetchFiles, uploadFile), (state) => {
         state.loading = true
       })
-      .addMatcher(isFulfilled(fetchPhotos, uploadFile), (state) => {
+      .addMatcher(isFulfilled(fetchFiles, uploadFile), (state) => {
         state.loading = false
       })
-      .addMatcher(isRejected(fetchPhotos, uploadFile), (state) => {
+      .addMatcher(isRejected(fetchFiles, uploadFile), (state) => {
         state.loading = false
       })
   },
