@@ -11,6 +11,10 @@ FROM node:alpine AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+
+ARG NEXT_PUBLIC_LIFF_ID
+ENV NEXT_PUBLIC_LIFF_ID=${NEXT_PUBLIC_LIFF_ID}
+
 RUN yarn build 
 RUN yarn install --production --ignore-scripts --prefer-offline
 
