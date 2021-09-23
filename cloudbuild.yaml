@@ -1,12 +1,10 @@
 steps:
   # Build
   - name: 'gcr.io/cloud-builders/docker'
-    env:
-      - NEXT_PUBLIC_LIFF_ID=1656444334-jbnV013p
     args:
       - 'build'
       - '--build-arg'
-      - 'NEXT_PUBLIC_LIFF_ID=${NEXT_PUBLIC_LIFF_ID}'
+      - 'NEXT_PUBLIC_LIFF_ID=1656444334-jbnV013p'
       - '-t'
       - 'gcr.io/$PROJECT_ID/$REPO_NAME-$BRANCH_NAME:$SHORT_SHA'
       - '.'
