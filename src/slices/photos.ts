@@ -15,8 +15,8 @@ import { getStorage, ref, uploadBytes } from 'firebase/storage'
 
 if (!getApps().length) {
   initializeApp({
-    storageBucket: 'sa-freelance-d880a.appspot.com',
-    projectId: 'sa-freelance-d880a',
+    storageBucket: `${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}.appspot.com`,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   })
 }
