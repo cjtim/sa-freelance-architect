@@ -24,7 +24,7 @@ const initialState: PhotoState = {
 
 export const uploadFile = createAsyncThunk(
   'photo/uploadFile',
-  async (file: any) => {
+  async (file: File) => {
     const formData = new FormData()
     formData.append('file', file, file.name)
     const { data } = await backendInstance.post<string>('/api/files', formData)

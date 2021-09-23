@@ -17,11 +17,11 @@ import {
 import { AddIcon } from '@chakra-ui/icons'
 
 const buyGold1: React.FC = () => {
-  const [file, setFile] = useState<any>(null)
+  const [file, setFile] = useState<File>()
   const { value, url } = useAppSelector((state) => state.photos)
   const dispatch = useAppDispatch()
   const onUpload = async () => {
-    dispatch(uploadFile(file))
+    if (file) dispatch(uploadFile(file))
   }
   useEffect(() => {
     dispatch(fetchPhotos())

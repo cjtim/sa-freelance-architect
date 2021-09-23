@@ -27,17 +27,20 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     initalLine().then(() => setLoading(false))
   }, [])
 
-  if (typeof window !== 'undefined' && loading)
-    return (
-      <Center alignItems="center" height={window?.innerHeight || 'max-content'}>
-        <Spinner size="xl" />
-      </Center>
-    )
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>
         <AxiosErrorToast />
-        <Component {...pageProps} />
+        {typeof window !== 'undefined' && loading ? (
+          <Center
+            alignItems="center"
+            height={window?.innerHeight || 'max-content'}
+          >
+            <Spinner size="xl" />
+          </Center>
+        ) : (
+          <Component {...pageProps} />
+        )}
       </ChakraProvider>
     </Provider>
   )
