@@ -6,10 +6,11 @@ import { Provider } from 'react-redux'
 import { store } from '@/store'
 import backendInstance from '@/lib/axios'
 import AxiosErrorToast from '@/components/AxiosErrorToast'
+import { NEXT_CONFIG } from '@/config'
 
 async function initalLine() {
   const liff = (await import('@line/liff')).default
-  await liff.init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID || '' })
+  await liff.init({ liffId: NEXT_CONFIG.NEXT_PUBLIC_LIFF_ID })
   if (!liff.isLoggedIn()) {
     const url = window.location.href
     liff.login({ redirectUri: url.includes('logout') ? undefined : url })
@@ -17,7 +18,7 @@ async function initalLine() {
   // assign Authorization to every backendInstance ***
   backendInstance.defaults.headers.common.Authorization = `Bearer ${liff.getAccessToken()}`
   // eslint-disable-next-line no-console
-  console.log(await liff.getAccessToken())
+  console.log(liff.getAccessToken())
 }
 
 export default function MyApp({ Component, pageProps }: AppProps) {

@@ -12,12 +12,13 @@ import {
 } from '@reduxjs/toolkit'
 import { initializeApp, getApps, getApp } from 'firebase/app'
 import { getStorage, ref, uploadBytes } from 'firebase/storage'
+import { apiEndpoints, NEXT_CONFIG } from '@/config'
 
 if (!getApps().length) {
   initializeApp({
-    storageBucket: `${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}.appspot.com`,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    storageBucket: NEXT_CONFIG.BUCKET_NAME,
+    projectId: NEXT_CONFIG.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    apiKey: NEXT_CONFIG.NEXT_PUBLIC_FIREBASE_API_KEY,
   })
 }
 
@@ -42,9 +43,8 @@ export const uploadFile = createAsyncThunk(
   async (file: File) => {
     const uuid = uuidv4()
     const destination = `test/${file.name}`
-    const userRef = ref(storage, destination)
-    await uploadBytes(userRef, file)
-    const { data } = await backendInstance.put<string>('/api/files', {
+    await uploadBytes(ref(storage, destination), file)
+    const { data } = await backendInstance.put<string>(apiEndpoints.files, {
       ref: destination,
       uuid,
     })
@@ -53,7 +53,7 @@ export const uploadFile = createAsyncThunk(
 )
 
 export const fetchPhotos = createAsyncThunk('photo/fetchPhotos', async () => {
-  const { data } = await backendInstance.get<Photo[]>('/api/db')
+  const { data } = await backendInstance.get<Photo[]>(apiEndpoints.photos)
   return data
 })
 
