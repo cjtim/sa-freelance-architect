@@ -1,5 +1,5 @@
 const CONFIG = {
-  BUCKET_NAME: process.env.BUCKET_NAME || '',
+  BUCKET_NAME: `${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}.appspot.com`,
   FIREBASE_ACC: JSON.parse(process.env.FIREBASE_ACC || ''),
   // FIREBASE_DB: process.env.FIREBASE_DB || '',
   LINE_VERIFY_LIFF_TOKEN_API:
