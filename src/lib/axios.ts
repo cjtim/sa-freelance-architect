@@ -9,4 +9,10 @@ export async function getLIFFToken() {
   return liff.getAccessToken() || ''
 }
 
+export async function getLineUid() {
+  const liff = (await import('@line/liff')).default
+  await liff.ready
+  return (await liff.getProfile()).userId || ''
+}
+
 export default backendInstance

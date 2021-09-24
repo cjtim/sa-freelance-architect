@@ -2,15 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { Projects } from './projects'
 
 @Entity()
-export class Files {
-  constructor(job: Files) {
+export class Projects {
+  constructor(job: Omit<Projects, 'id' | 'createdAt' | 'updatedAt'>) {
     Object.assign(this, job)
   }
 
@@ -21,10 +19,7 @@ export class Files {
   name!: string
 
   @Column()
-  url!: string
-
-  @ManyToOne(() => Projects, (projects) => projects.id)
-  projectId!: number
+  lineUid!: string
 
   @CreateDateColumn({ type: 'timestamptz' })
   readonly createdAt!: Date

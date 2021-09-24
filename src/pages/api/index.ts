@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import express, { Response, Request } from 'express'
+import express, { Response, Request, NextFunction } from 'express'
 import { api } from './router'
 import { connectDB } from './repository'
 import LineMiddleware from './middleware/line'
@@ -17,16 +17,17 @@ app.use(
 app.use(async (req, res, next) => {
   await connectDB()
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
-  return next()
+  next()
 })
 
-app.use('/api', LineMiddleware.liffVerify, api)
+app.use(LineMiddleware.liffVerify, api)
 
-app.use((err: Error, req: Request, res: Response) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (!res.headersSent) {
     // eslint-disable-next-line no-console
     console.error(err.stack)
     res.sendStatus(500)
+    next()
   }
 })
 

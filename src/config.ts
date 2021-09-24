@@ -7,6 +7,7 @@ export const NEXT_CONFIG: Record<string, string> = {
 }
 
 export const apiEndpoints = {
+  projects: '/api/projects',
   files: '/api/files',
   photos: '/api/db',
 }

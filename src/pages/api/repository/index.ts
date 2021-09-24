@@ -1,9 +1,9 @@
 import { createConnection, getConnection } from 'typeorm'
 import CONFIG from '../config'
-import { Photo } from '../entity/photo'
 import { Files } from '../entity/files'
+import { Projects } from '../entity/projects'
 
-const entities = [Photo, Files]
+const entities = [Files, Projects]
 
 export async function connectDB() {
   try {
@@ -12,6 +12,7 @@ export async function connectDB() {
       throw Error('No connection')
     }
   } catch (e) {
+    console.info('Connecting db...')
     const {
       PSQL_HOSTNAME,
       PSQL_PASSWORD,
