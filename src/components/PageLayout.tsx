@@ -10,7 +10,7 @@ export default function PageLayout({
   windowTitle: string
   children?: any
 }): JSX.Element {
-  const { loading: photoLoading } = useAppSelector((state) => state.photos)
+  const { loading: photoLoading } = useAppSelector((state) => state.projects)
 
   // centralize loading
   const loading = photoLoading
@@ -18,6 +18,7 @@ export default function PageLayout({
     <>
       <Head>
         <title>{windowTitle}</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
         {loading ? (

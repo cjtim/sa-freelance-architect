@@ -11,8 +11,14 @@ api.get(
   apiEndpoints.projects,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log('get project')
+      const { id } = req.query
       const repo = getRepository<Projects>('Projects')
+      if (id) {
+        const project = await repo.findOne({
+          where: { id, lineUid: req.user.userId },
+        })
+        return res.json(project)
+      }
       const all = await repo.find({ where: { lineUid: req.user.userId } })
       return res.json(all)
     } catch (e) {
@@ -35,17 +41,31 @@ api.post(
   },
 )
 
+api.get(
+  apiEndpoints.files,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.query
+      const fileRepo = getRepository<Files>('Files')
+      const files = await fileRepo.find({ where: { projects: Number(id) } })
+      return res.json(files)
+    } catch (e) {
+      return next(e)
+    }
+  },
+)
 // update file metadata
 api.put(
   apiEndpoints.files,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { ref }: { ref: string } = req.body
+      const { ref, id }: { ref: string; id: string } = req.body
       const url = await BucketServices.uploadMetadata(ref, req.body.uuid)
       const fileRepo = getRepository<Files>('Files')
       await fileRepo.insert({
         url,
         name: ref.split('/').pop() || ref,
+        projects: Number(id),
       })
       return res.send(url)
     } catch (e) {

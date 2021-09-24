@@ -7,6 +7,7 @@ import { store } from '@/store'
 import backendInstance from '@/lib/axios'
 import AxiosErrorToast from '@/components/AxiosErrorToast'
 import { NEXT_CONFIG } from '@/config'
+import { useRouter } from 'next/router'
 
 async function initalLine() {
   const liff = (await import('@line/liff')).default
@@ -14,6 +15,7 @@ async function initalLine() {
   if (!liff.isLoggedIn()) {
     const url = window.location.href
     liff.login({ redirectUri: url.includes('logout') ? undefined : url })
+    return
   }
   // assign Authorization to every backendInstance ***
   backendInstance.defaults.headers.common.Authorization = `Bearer ${liff.getAccessToken()}`
@@ -22,12 +24,18 @@ async function initalLine() {
 }
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const [loading, setLoading] = useState(true)
+  const router = useRouter()
+  const [loggingin, setLoggingin] = useState(true)
+  const [routing, setRouting] = useState(true)
 
   useEffect(() => {
-    initalLine().then(() => setLoading(false))
+    router.events.on('routeChangeStart', () => setRouting(true))
+    router.events.on('routeChangeComplete', () => setRouting(false))
+    router.events.on('routeChangeError', () => router.reload())
+    initalLine().then(() => setLoggingin(false))
   }, [])
 
+  const loading = routing || loggingin
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>

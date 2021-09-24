@@ -12,7 +12,6 @@ export async function connectDB() {
       throw Error('No connection')
     }
   } catch (e) {
-    console.info('Connecting db...')
     const {
       PSQL_HOSTNAME,
       PSQL_PASSWORD,
