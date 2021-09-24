@@ -23,8 +23,12 @@ export class Files {
   @Column()
   url!: string
 
-  @ManyToOne(() => Projects, (projects) => projects.id)
-  projectId!: number
+  @ManyToOne(() => Projects, (projects) => projects.id, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    nullable: false,
+  })
+  projects!: number
 
   @CreateDateColumn({ type: 'timestamptz' })
   readonly createdAt!: Date

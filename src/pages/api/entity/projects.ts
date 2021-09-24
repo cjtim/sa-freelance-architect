@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import { Files } from './files'
 
 @Entity()
 export class Projects {
@@ -20,6 +22,9 @@ export class Projects {
 
   @Column()
   lineUid!: string
+
+  @OneToMany(() => Files, (Files) => Files.id)
+  Files?: Files[]
 
   @CreateDateColumn({ type: 'timestamptz' })
   readonly createdAt!: Date

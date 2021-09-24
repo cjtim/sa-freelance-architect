@@ -1,3 +1,4 @@
+import NavBar from '@/components/NavBar'
 import PageLayout from '@/components/PageLayout'
 import { getLineUid } from '@/lib/axios'
 import { Projects } from '@/pages/api/entity/projects'
@@ -13,6 +14,7 @@ import {
   Input,
 } from '@chakra-ui/react'
 import { Field, FieldMetaProps, Form, Formik, FormikProps } from 'formik'
+import router from 'next/router'
 import React from 'react'
 import * as Yup from 'yup'
 
@@ -22,6 +24,7 @@ const ProjectCreate = () => {
   if (typeof window !== 'undefined') {
     return (
       <PageLayout windowTitle="Project Create">
+        <NavBar />
         <Container maxW="container.xl">
           <Heading>Project create</Heading>
           <Formik
@@ -34,12 +37,13 @@ const ProjectCreate = () => {
             })}
             onSubmit={async (values, actions) => {
               if (values.name) {
-                dispatch(
+                await dispatch(
                   createProject({
                     name: values.name,
                     lineUid: await getLineUid(),
                   }),
                 )
+                router.push('/projects')
               }
               actions.setSubmitting(false)
             }}

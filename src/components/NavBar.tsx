@@ -13,9 +13,10 @@ import {
   SkeletonCircle,
   useColorMode,
   MenuGroup,
-  Icon,
+  IconButton,
 } from '@chakra-ui/react'
 import React from 'react'
+import NextLink from 'next/link'
 
 import { BsHouseFill } from 'react-icons/bs'
 
@@ -54,11 +55,14 @@ export default function NavBar(): JSX.Element {
         py={4}
         bg={['primary.500', 'primary.500', 'transparent', 'transparent']}
       >
-        <Flex align="center">
-          <Link href="/">
-            <Icon as={BsHouseFill} fontSize="3xl" />
-          </Link>
-        </Flex>
+        <Link href="/" as={NextLink}>
+          <IconButton
+            aria-label="Home"
+            as={BsHouseFill}
+            fontSize="3xl"
+            bgColor="transparent"
+          />
+        </Link>
 
         <Box display={{ base: 'block', md: 'none' }} onClick={toggleMenu}>
           <HamburgerIcon />
@@ -74,9 +78,11 @@ export default function NavBar(): JSX.Element {
             direction={['column', 'row', 'row', 'row']}
             pt={[4, 4, 0, 0]}
           >
-            <Link href="/liff" p={2}>
-              <Button>Photos</Button>
-            </Link>
+            <Button mx={2}>
+              <Link href="/projects" as={NextLink}>
+                Projects
+              </Link>
+            </Button>
             {/* <Link href="/liff/urls" p={2}>
               <Button>My Urls</Button>
             </Link>
