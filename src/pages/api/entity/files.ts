@@ -1,9 +1,8 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
-export class Files extends BaseEntity {
+export class Files {
   constructor(job: Partial<File>) {
-    super()
     Object.assign(this, job)
   }
 

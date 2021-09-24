@@ -1,7 +1,7 @@
 const CONFIG = {
   BUCKET_NAME: `${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}.appspot.com`,
-  FIREBASE_ACC: JSON.parse(process.env.FIREBASE_ACC || ''),
-  // FIREBASE_DB: process.env.FIREBASE_DB || '',
+  FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || '',
+  FIREBASE_ACC: JSON.parse(process.env.FIREBASE_ACC || '') || {},
   LINE_VERIFY_LIFF_TOKEN_API:
     'https://api.line.me/oauth2/v2.1/verify?access_token=',
   LINE_GET_PROFILE_API: 'https://api.line.me/v2/profile',

@@ -1,11 +1,11 @@
-import { Storage, UploadOptions } from '@google-cloud/storage'
-import { v4 as uuidv4 } from 'uuid'
+import { Storage } from '@google-cloud/storage'
+// import { v4 as uuidv4 } from 'uuid'
 // import path from 'path'
 import CONFIG from '../config'
 
 const storage = new Storage({
   credentials: CONFIG.FIREBASE_ACC as any,
-  projectId: CONFIG.FIREBASE_ACC.project_id,
+  projectId: CONFIG.FIREBASE_PROJECT_ID,
 })
 const bucket = storage.bucket(CONFIG.BUCKET_NAME)
 
@@ -44,27 +44,27 @@ export class BucketServices {
   //   return ''
   // }
 
-  static async addBinary(
-    parentPath: string,
-    filename: string,
-    data: Buffer,
-  ): Promise<string> {
-    const uuid = uuidv4()
-    const destination = `${parentPath}/${filename}`
-    const option: UploadOptions = {
-      destination,
-      gzip: true,
-      metadata: {
-        metadata: {
-          firebaseStorageDownloadTokens: uuid,
-        },
-      },
-    }
-    await bucket.file(destination).save(data, option)
-    return `https://firebasestorage.googleapis.com/v0/b/${
-      bucket.name
-    }/o/${encodeURIComponent(destination)}?alt=media&token=${uuid}`
-  }
+  // static async addBinary(
+  //   parentPath: string,
+  //   filename: string,
+  //   data: Buffer,
+  // ): Promise<string> {
+  //   const uuid = uuidv4()
+  //   const destination = `${parentPath}/${filename}`
+  //   const option: UploadOptions = {
+  //     destination,
+  //     gzip: true,
+  //     metadata: {
+  //       metadata: {
+  //         firebaseStorageDownloadTokens: uuid,
+  //       },
+  //     },
+  //   }
+  //   await bucket.file(destination).save(data, option)
+  //   return `https://firebasestorage.googleapis.com/v0/b/${
+  //     bucket.name
+  //   }/o/${encodeURIComponent(destination)}?alt=media&token=${uuid}`
+  // }
 
   static async uploadMetadata(ref: string, uuid: string) {
     await bucket.file(ref).setMetadata({
