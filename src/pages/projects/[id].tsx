@@ -27,7 +27,8 @@ const ProjectDetails = () => {
 
   const onUpload = async () => {
     if (file) {
-      dispatch(uploadFile({ id: Number(id as string), file }))
+      await dispatch(uploadFile({ id: Number(id as string), file }))
+      router.reload()
     }
   }
   useEffect(() => {
