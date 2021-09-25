@@ -10,9 +10,8 @@ import {
   IconButton,
   Input,
   Link,
-  Text,
 } from '@chakra-ui/react'
-import { AddIcon } from '@chakra-ui/icons'
+import { AddIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import { fetchFiles, fetchProject, uploadFile } from '@/slices/projects'
 import { Column } from 'react-table'
 import BaseTable from '@/components/Table/BaseTable'
@@ -37,17 +36,17 @@ const ProjectDetails = () => {
       dispatch(fetchProject(idInt))
       dispatch(fetchFiles(idInt))
     }
-  }, [id])
+  }, [dispatch, id])
 
   const columns: Column<Files>[] = [
     { Header: 'ID', accessor: 'id' },
-    { Header: 'Name', accessor: 'name' },
     {
-      Header: 'url',
-      accessor: 'url',
-      Cell: ({ value }) => (
-        <Link href={value} isExternal>
-          <Text>{value}</Text>
+      Header: 'Name',
+      accessor: 'name',
+      Cell: ({ value, row }) => (
+        <Link href={row.original.url} isExternal>
+          {value}
+          <ExternalLinkIcon mx="2px" />
         </Link>
       ),
     },

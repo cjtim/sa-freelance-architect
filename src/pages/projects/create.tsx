@@ -1,7 +1,7 @@
 import NavBar from '@/components/NavBar'
 import PageLayout from '@/components/PageLayout'
 import { getLineUid } from '@/lib/axios'
-import { Projects } from '@/pages/api/entity/projects'
+import { Project } from '@/pages/api/entity/project'
 import { createProject } from '@/slices/projects'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import {
@@ -52,7 +52,7 @@ const ProjectCreate = () => {
               errors,
               touched,
               isSubmitting,
-            }: FormikProps<Partial<Projects>>) => (
+            }: FormikProps<Partial<Project>>) => (
               <Form>
                 <Field name="name">
                   {({ field }: { field: FieldMetaProps<any> }) => (

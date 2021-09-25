@@ -1,9 +1,9 @@
 import { createConnection, getConnection } from 'typeorm'
 import CONFIG from '../config'
 import { Files } from '../entity/files'
-import { Projects } from '../entity/projects'
+import { Project } from '../entity/project'
 
-const entities = [Files, Projects]
+const entities = [Files, Project]
 
 export async function connectDB() {
   try {

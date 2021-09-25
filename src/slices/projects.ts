@@ -12,7 +12,7 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit'
 
-import { Projects } from '@/pages/api/entity/projects'
+import { Project } from '@/pages/api/entity/project'
 import { Files } from '@/pages/api/entity/files'
 
 if (!getApps().length) {
@@ -27,15 +27,15 @@ if (!getApps().length) {
 const storage = getStorage(getApp())
 
 interface ProjectState {
-  projects: Projects[]
-  project: Projects
+  projects: Project[]
+  project: Project
   files: Files[]
   loading: boolean
 }
 
 const initialState: ProjectState = {
   projects: [],
-  project: {} as Projects,
+  project: {} as Project,
   files: [],
   loading: false,
 }
@@ -43,9 +43,7 @@ const initialState: ProjectState = {
 export const fetchProjects = createAsyncThunk(
   'projects/fetchProjects',
   async () => {
-    const { data } = await backendInstance.get<Projects[]>(
-      apiEndpoints.projects,
-    )
+    const { data } = await backendInstance.get<Project[]>(apiEndpoints.projects)
     return data
   },
 )
@@ -54,17 +52,16 @@ export const fetchProject = createAsyncThunk(
   'projects/fetchProject',
   async (id: number) => {
     const params = { id }
-    const { data } = await backendInstance.get<Projects>(
-      apiEndpoints.projects,
-      { params },
-    )
+    const { data } = await backendInstance.get<Project>(apiEndpoints.projects, {
+      params,
+    })
     return data
   },
 )
 
 export const createProject = createAsyncThunk(
   'projects/createProject',
-  async (project: Omit<Projects, 'id' | 'createdAt' | 'updatedAt'>) => {
+  async (project: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>) => {
     const { data } = await backendInstance.post<any>(
       apiEndpoints.projects,
       project,
@@ -108,13 +105,13 @@ export const projectsSlice = createSlice({
     builder
       .addCase(
         fetchProjects.fulfilled.type,
-        (state, action: PayloadAction<Projects[]>) => {
+        (state, action: PayloadAction<Project[]>) => {
           state.projects = action.payload
         },
       )
       .addCase(
         fetchProject.fulfilled.type,
-        (state, action: PayloadAction<Projects>) => {
+        (state, action: PayloadAction<Project>) => {
           state.project = action.payload
         },
       )
@@ -124,15 +121,42 @@ export const projectsSlice = createSlice({
           state.files = action.payload
         },
       )
-      .addMatcher(isPending(fetchProject, createProject), (state) => {
-        state.loading = true
-      })
-      .addMatcher(isFulfilled(fetchProject, createProject), (state) => {
-        state.loading = false
-      })
-      .addMatcher(isRejected(fetchProject, createProject), (state) => {
-        state.loading = false
-      })
+      .addMatcher(
+        isPending(
+          fetchProjects,
+          fetchProject,
+          createProject,
+          uploadFile,
+          fetchFiles,
+        ),
+        (state) => {
+          state.loading = true
+        },
+      )
+      .addMatcher(
+        isFulfilled(
+          fetchProjects,
+          fetchProject,
+          createProject,
+          uploadFile,
+          fetchFiles,
+        ),
+        (state) => {
+          state.loading = false
+        },
+      )
+      .addMatcher(
+        isRejected(
+          fetchProjects,
+          fetchProject,
+          createProject,
+          uploadFile,
+          fetchFiles,
+        ),
+        (state) => {
+          state.loading = false
+        },
+      )
   },
 })
 

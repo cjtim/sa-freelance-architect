@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm'
 import { apiEndpoints } from '@/config'
 import { BucketServices } from './services/bucket'
 import { Files } from './entity/files'
-import { Projects } from './entity/projects'
+import { Project } from './entity/project'
 
 const api = Router()
 
@@ -12,7 +12,7 @@ api.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.query
-      const repo = getRepository<Projects>('Projects')
+      const repo = getRepository<Project>('Project')
       if (id) {
         const project = await repo.findOne({
           where: { id, lineUid: req.user.userId },
@@ -31,8 +31,8 @@ api.post(
   apiEndpoints.projects,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const body = req.body as Projects
-      const repo = getRepository<Projects>('Projects')
+      const body = req.body as Project
+      const repo = getRepository<Project>('Project')
       const insert = await repo.insert(body)
       return res.json(insert.identifiers)
     } catch (e) {
@@ -47,7 +47,7 @@ api.get(
     try {
       const { id } = req.query
       const fileRepo = getRepository<Files>('Files')
-      const files = await fileRepo.find({ where: { projects: Number(id) } })
+      const files = await fileRepo.find({ where: { project: Number(id) } })
       return res.json(files)
     } catch (e) {
       return next(e)
@@ -65,7 +65,7 @@ api.put(
       await fileRepo.insert({
         url,
         name: ref.split('/').pop() || ref,
-        projects: Number(id),
+        project: Number(id),
       })
       return res.send(url)
     } catch (e) {

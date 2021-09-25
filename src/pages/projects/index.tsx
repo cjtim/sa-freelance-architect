@@ -1,7 +1,7 @@
 import NavBar from '@/components/NavBar'
 import PageLayout from '@/components/PageLayout'
 import BaseTable from '@/components/Table/BaseTable'
-import { Projects } from '@/pages/api/entity/projects'
+import { Project } from '@/pages/api/entity/project'
 import { fetchProjects } from '@/slices/projects'
 import { useAppSelector, useAppDispatch } from '@/store/hook'
 import { Container, Flex, Heading, Button, Link } from '@chakra-ui/react'
@@ -19,7 +19,7 @@ const ProjectList: React.FC = () => {
     dispatch(fetchProjects())
   }, [dispatch])
 
-  const columns: Column<Projects>[] = [
+  const columns: Column<Project>[] = [
     {
       Header: 'ID',
       accessor: 'id',

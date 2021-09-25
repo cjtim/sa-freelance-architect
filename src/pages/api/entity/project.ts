@@ -9,8 +9,8 @@ import {
 import { Files } from './files'
 
 @Entity()
-export class Projects {
-  constructor(job: Omit<Projects, 'id' | 'createdAt' | 'updatedAt'>) {
+export class Project {
+  constructor(job: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>) {
     Object.assign(this, job)
   }
 
@@ -23,7 +23,10 @@ export class Projects {
   @Column()
   lineUid!: string
 
-  @OneToMany(() => Files, (Files) => Files.id)
+  @OneToMany(() => Files, (Files) => Files.id, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   Files?: Files[]
 
   @CreateDateColumn({ type: 'timestamptz' })

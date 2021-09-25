@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { Projects } from './projects'
+import { Project } from './project'
 
 @Entity()
 export class Files {
@@ -23,12 +23,12 @@ export class Files {
   @Column()
   url!: string
 
-  @ManyToOne(() => Projects, (projects) => projects.id, {
+  @ManyToOne(() => Project, (project) => project.id, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,
   })
-  projects!: number
+  project!: number
 
   @CreateDateColumn({ type: 'timestamptz' })
   readonly createdAt!: Date
