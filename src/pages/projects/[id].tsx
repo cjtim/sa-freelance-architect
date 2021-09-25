@@ -33,13 +33,15 @@ const ProjectDetails = () => {
   useEffect(() => {
     if (id) {
       const idInt = Number(id as string)
+      if (Number.isNaN(idInt)) {
+        return router.back()
+      }
       dispatch(fetchProject(idInt))
       dispatch(fetchFiles(idInt))
     }
   }, [dispatch, id])
 
   const columns: Column<Files>[] = [
-    { Header: 'ID', accessor: 'id' },
     {
       Header: 'Name',
       accessor: 'name',

@@ -4,7 +4,7 @@ import BaseTable from '@/components/Table/BaseTable'
 import { Project } from '@/pages/api/entity/project'
 import { fetchProjects } from '@/slices/projects'
 import { useAppSelector, useAppDispatch } from '@/store/hook'
-import { Container, Flex, Heading, Button, Link } from '@chakra-ui/react'
+import { Container, Flex, Heading, Button, Link, Box } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
@@ -21,19 +21,10 @@ const ProjectList: React.FC = () => {
 
   const columns: Column<Project>[] = [
     {
-      Header: 'ID',
-      accessor: 'id',
-      Cell: ({ value }) => (
-        <Link as={NextLink} href={`/projects/${value}`}>
-          <a>{value}</a>
-        </Link>
-      ),
-    },
-    {
       Header: 'Name',
       accessor: 'name',
       Cell: ({ value, row }) => (
-        <Link as={NextLink} href={`/projects/${row.values.id}`}>
+        <Link as={NextLink} href={`/projects/${row.original.id}`}>
           <a>{value}</a>
         </Link>
       ),
