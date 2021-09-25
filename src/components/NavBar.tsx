@@ -78,11 +78,9 @@ export default function NavBar(): JSX.Element {
             direction={['column', 'row', 'row', 'row']}
             pt={[4, 4, 0, 0]}
           >
-            <Button mx={2}>
-              <Link href="/projects" as={NextLink}>
-                Projects
-              </Link>
-            </Button>
+            <Link href="/projects" as={NextLink}>
+              <Button mx={2}>Projects</Button>
+            </Link>
             {/* <Link href="/liff/urls" p={2}>
               <Button>My Urls</Button>
             </Link>
