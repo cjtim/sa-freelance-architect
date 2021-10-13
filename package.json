@@ -20,7 +20,7 @@
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "postinstall": "husky install",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
-    "db-generate": "yarn typeorm migration:generate",
+    "db-generate": "yarn typeorm migration:generate -n migrate",
     "db-migrate": "yarn typeorm migration:run"
   },
   "lint-staged": {
