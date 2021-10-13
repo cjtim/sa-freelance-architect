@@ -50,8 +50,8 @@ export class Furniture {
   projectFurniture?: ProjectFurniture[]
 
   @CreateDateColumn({ type: 'timestamptz' })
-  readonly createdAt!: Date
+  readonly created_at!: Date
 
   @UpdateDateColumn({ type: 'timestamptz' })
-  readonly updatedAt!: Date
+  readonly updated_at!: Date
 }
