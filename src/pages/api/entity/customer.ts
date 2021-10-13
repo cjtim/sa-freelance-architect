@@ -16,7 +16,7 @@ export class Customer {
   }
 
   @PrimaryGeneratedColumn()
-  readonly customer_id!: number
+  readonly customer_id?: number
 
   @Column()
   name!: string
@@ -31,8 +31,8 @@ export class Customer {
   projects?: Project[]
 
   @CreateDateColumn({ type: 'timestamptz' })
-  readonly created_at!: Date
+  readonly created_at?: Date
 
   @UpdateDateColumn({ type: 'timestamptz' })
-  readonly updated_at!: Date
+  readonly updated_at?: Date
 }

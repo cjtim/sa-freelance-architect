@@ -9,17 +9,16 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { NewRow } from '../interface/common'
 import { Architect, Contract, Customer, FileList, ProjectFurniture } from '.'
 
 @Entity()
 export class Project {
-  constructor(job: NewRow<Project>) {
+  constructor(job: Partial<Project>) {
     Object.assign(this, job)
   }
 
   @PrimaryGeneratedColumn()
-  readonly project_id!: number
+  readonly project_id?: number
 
   @Column()
   name!: string
@@ -58,7 +57,7 @@ export class Project {
     nullable: false,
   })
   @JoinColumn({ name: 'customer_id' })
-  customer!: Partial<Customer>
+  customer?: Partial<Customer>
 
   // FK - not null
   @ManyToOne('Architect', 'Project', {
@@ -67,11 +66,11 @@ export class Project {
     nullable: false,
   })
   @JoinColumn({ name: 'architect_id' })
-  architect!: Partial<Architect>
+  architect?: Partial<Architect>
 
   @CreateDateColumn({ type: 'timestamptz' })
-  readonly created_at!: Date
+  readonly created_at?: Date
 
   @UpdateDateColumn({ type: 'timestamptz' })
-  readonly updated_at!: Date
+  readonly updated_at?: Date
 }

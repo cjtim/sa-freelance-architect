@@ -62,7 +62,7 @@ export const fetchProject = createAsyncThunk(
 
 export const createProject = createAsyncThunk(
   'projects/createProject',
-  async (project: NewRow<Project>) => {
+  async (project: Project) => {
     const { data } = await backendInstance.post<any>(
       apiEndpoints.projects,
       project,

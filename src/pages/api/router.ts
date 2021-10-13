@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express'
 import { getRepository } from 'typeorm'
 import { apiEndpoints } from '@/config'
 import { BucketServices } from './services/bucket'
-import { Customer, FileList, Project } from './entity'
+import { Architect, Customer, FileList, Project } from './entity'
 
 const api = Router()
 
@@ -32,7 +32,19 @@ api.post(
     try {
       const body = req.body as Project
       const repo = getRepository<Project>('Project')
-      const insert = await repo.insert(body)
+      const arRepo = getRepository<Architect>('Architect')
+      let architect = await arRepo.findOne({
+        where: { lineUid: req.user.userId },
+      })
+      if (!architect) {
+        architect = arRepo.create({
+          lineUid: req.user.userId,
+          name: req.user.displayName,
+          phone: '0000000000',
+        })
+        architect = await arRepo.save(architect)
+      }
+      const insert = await repo.insert({ ...body, architect })
       return res.json(insert.identifiers)
     } catch (e) {
       return next(e)
