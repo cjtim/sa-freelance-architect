@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
-import { Project } from './project'
+import { Project } from '.'
 
 @Entity()
 export class Customer {
@@ -24,7 +24,7 @@ export class Customer {
   @Column({ length: '10' })
   phone!: string
 
-  @OneToMany(() => Project, (project) => project.project_id, {
+  @OneToMany('Project', 'Customer', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

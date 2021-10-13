@@ -9,8 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
-import { Project } from './project'
-import { Receipt } from './receipts'
+import { Receipt, Project } from '.'
 
 @Entity()
 export class DeliverTask {
@@ -31,7 +30,7 @@ export class DeliverTask {
   actual_date?: Date
 
   // FK - not null
-  @ManyToOne(() => Project, (project) => project.project_id, {
+  @ManyToOne('Project', 'DeliverTask', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,
@@ -39,7 +38,7 @@ export class DeliverTask {
   @JoinColumn({ name: 'project_id' })
   project!: Project
 
-  @OneToMany(() => Receipt, (receipt) => receipt.receipt_id, {
+  @OneToMany('Receipt', 'DeliverTask', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

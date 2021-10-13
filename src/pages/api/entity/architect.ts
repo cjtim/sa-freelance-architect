@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
-import { Project } from './project'
+import { Project } from '.'
 
 @Entity()
 export class Architect {
@@ -27,7 +27,7 @@ export class Architect {
   @Column()
   lineUid!: string
 
-  @OneToMany(() => Project, (project) => project.project_id, {
+  @OneToMany('Project', 'Architect', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

@@ -3,8 +3,6 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -12,12 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
-import { Architect } from './architect'
-import { Contract } from './contract'
-import { Customer } from './customer'
-import { FileList } from './file_list'
-import { Furniture } from './furnitures'
-import { ProjectFurniture } from './project_funiture'
+import { Architect, Contract, Customer, FileList, ProjectFurniture } from '.'
 
 @Entity()
 export class Project {
@@ -43,30 +36,26 @@ export class Project {
   @Column()
   lineUid!: string
 
-  @OneToMany(() => FileList, (FileList) => FileList.file_id, {
+  @OneToMany('FileList', 'Project', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   fileLists?: FileList[]
 
-  @OneToOne(() => Contract, (Contract) => Contract.contract_id, {
+  @OneToOne('Contract', 'Project', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   contract?: Contract
 
-  @OneToMany(
-    () => ProjectFurniture,
-    (ProjectFurniture) => ProjectFurniture.project_furniture_id,
-    {
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    },
-  )
+  @OneToMany('ProjectFurniture', 'Project', {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   projectFurniture?: ProjectFurniture[]
 
   // FK - not null
-  @ManyToOne(() => Customer, (customer) => customer.customer_id, {
+  @ManyToOne('Customer', 'Project', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,
@@ -75,7 +64,7 @@ export class Project {
   customer!: Customer
 
   // FK - not null
-  @ManyToOne(() => Architect, (ar) => ar.architect_id, {
+  @ManyToOne('Architect', 'Project', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,

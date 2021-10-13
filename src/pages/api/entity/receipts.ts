@@ -3,12 +3,11 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
-import { DeliverTask } from './deliver_task'
+import { DeliverTask } from '.'
 
 @Entity()
 export class Receipt {
@@ -29,7 +28,7 @@ export class Receipt {
   @Column({ nullable: true })
   receipt_img_url?: Date
 
-  @OneToMany(() => DeliverTask, (deliverTask) => deliverTask.task_id, {
+  @OneToMany('DeliverTask', 'Receipt', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,

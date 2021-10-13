@@ -1,5 +1,4 @@
 import {
-  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -8,8 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
-import { Furniture } from './furnitures'
-import { Project } from './project'
+import { Project, Furniture } from '.'
 
 @Entity()
 export class ProjectFurniture {
@@ -21,7 +19,7 @@ export class ProjectFurniture {
   readonly project_furniture_id!: number
 
   // FK
-  @ManyToOne(() => Project, (project) => project.project_id, {
+  @ManyToOne('Project', 'ProjectFurniture', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,
@@ -30,7 +28,7 @@ export class ProjectFurniture {
   project!: Project
 
   // FK
-  @ManyToOne(() => Furniture, (furniture) => furniture.furniture_id, {
+  @ManyToOne('Furniture', 'ProjectFurniture', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,

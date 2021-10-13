@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
-import { Project } from './project'
+import { Project } from '.'
 
 @Entity()
 export class FileList {
@@ -29,7 +29,7 @@ export class FileList {
   notes?: string
 
   // FK
-  @ManyToOne(() => Project, (project) => project.project_id, {
+  @ManyToOne('Project', 'FileList', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,

@@ -2,14 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
-import { Project } from './project'
+import { Project } from '.'
 
 @Entity()
 export class Contract {
@@ -33,11 +31,10 @@ export class Contract {
   installment?: number
 
   // FK
-  @OneToOne(() => Project, (project) => project.project_id, {
+  @OneToOne('Project', 'Contract', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn({ name: 'project_id' })
   project!: Project
 
   @CreateDateColumn({ type: 'timestamptz' })

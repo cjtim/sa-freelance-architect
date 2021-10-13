@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
-import { ProjectFurniture } from './project_funiture'
+import { ProjectFurniture } from '.'
 
 @Entity()
 export class Furniture {
@@ -39,14 +39,10 @@ export class Furniture {
   @Column()
   img!: string
 
-  @OneToMany(
-    () => ProjectFurniture,
-    (ProjectFurniture) => ProjectFurniture.project_furniture_id,
-    {
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    },
-  )
+  @OneToMany('ProjectFurniture', 'Furniture', {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   projectFurniture?: ProjectFurniture[]
 
   @CreateDateColumn({ type: 'timestamptz' })
