@@ -13,7 +13,8 @@ import {
 } from '@reduxjs/toolkit'
 
 import { Project } from '@/pages/api/entity/project'
-import { Files } from '@/pages/api/entity/files'
+import { FileList } from '@/pages/api/entity/file_list'
+import { NewRow } from '@/pages/api/interface/common'
 
 if (!getApps().length) {
   initializeApp({
@@ -29,7 +30,7 @@ const storage = getStorage(getApp())
 interface ProjectState {
   projects: Project[]
   project: Project
-  files: Files[]
+  files: FileList[]
   loading: boolean
 }
 
@@ -61,7 +62,7 @@ export const fetchProject = createAsyncThunk(
 
 export const createProject = createAsyncThunk(
   'projects/createProject',
-  async (project: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>) => {
+  async (project: NewRow<Project>) => {
     const { data } = await backendInstance.post<any>(
       apiEndpoints.projects,
       project,
@@ -90,7 +91,7 @@ export const uploadFile = createAsyncThunk(
 export const fetchFiles = createAsyncThunk(
   'projects/fetchFiles',
   async (id: number) => {
-    const { data } = await backendInstance.get<Files[]>(apiEndpoints.files, {
+    const { data } = await backendInstance.get<FileList[]>(apiEndpoints.files, {
       params: { id },
     })
     return data
@@ -117,7 +118,7 @@ export const projectsSlice = createSlice({
       )
       .addCase(
         fetchFiles.fulfilled.type,
-        (state, action: PayloadAction<Files[]>) => {
+        (state, action: PayloadAction<FileList[]>) => {
           state.files = action.payload
         },
       )

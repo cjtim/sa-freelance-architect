@@ -2,33 +2,42 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import { NewRow } from '../interface/common'
 import { Project } from './project'
 
 @Entity()
-export class Files {
-  constructor(job: Files) {
+export class Contract {
+  constructor(job: NewRow<Contract>) {
     Object.assign(this, job)
   }
 
   @PrimaryGeneratedColumn()
-  readonly id!: number
+  readonly contract_id!: number
 
   @Column()
-  name!: string
+  estimated_when!: Date
 
   @Column()
-  url!: string
+  compensation!: number
 
-  @ManyToOne(() => Project, (project) => project.id, {
+  @Column()
+  started_when!: Date
+
+  @Column({ nullable: true })
+  installment?: number
+
+  // FK
+  @ManyToOne(() => Project, (project) => project.project_id, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
-    nullable: false,
   })
-  project!: number
+  @JoinColumn({ name: 'project_id' })
+  projects?: Project[]
 
   @CreateDateColumn({ type: 'timestamptz' })
   readonly createdAt!: Date

@@ -1,6 +1,6 @@
 import { createConnection, getConnection } from 'typeorm'
 import CONFIG from '../config'
-import { Files } from '../entity/files'
+import { Files } from '../entity/file_list'
 import { Project } from '../entity/project'
 
 const entities = [Files, Project]

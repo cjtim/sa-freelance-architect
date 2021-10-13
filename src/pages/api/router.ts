@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express'
 import { getRepository } from 'typeorm'
 import { apiEndpoints } from '@/config'
 import { BucketServices } from './services/bucket'
-import { Files } from './entity/files'
+import { Files } from './entity/file_list'
 import { Project } from './entity/project'
 
 const api = Router()
@@ -68,6 +68,21 @@ api.put(
         project: Number(id),
       })
       return res.send(url)
+    } catch (e) {
+      return next(e)
+    }
+  },
+)
+
+api.delete(
+  apiEndpoints.files,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id }: { id: string } = req.body
+      // const url = await BucketServices.uploadMetadata(ref, req.body.uuid)
+      const fileRepo = getRepository<Files>('Files')
+      await fileRepo.delete({ file_id: Number(id) })
+      return res.sendStatus(200)
     } catch (e) {
       return next(e)
     }

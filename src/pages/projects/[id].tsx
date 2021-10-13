@@ -15,7 +15,7 @@ import { AddIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import { fetchFiles, fetchProject, uploadFile } from '@/slices/projects'
 import { Column } from 'react-table'
 import BaseTable from '@/components/Table/BaseTable'
-import { Files } from '../api/entity/files'
+import { FileList } from '../api/entity/file_list'
 
 const ProjectDetails = () => {
   const router = useRouter()
@@ -41,7 +41,7 @@ const ProjectDetails = () => {
     }
   }, [dispatch, id])
 
-  const columns: Column<Files>[] = [
+  const columns: Column<FileList>[] = [
     {
       Header: 'Name',
       accessor: 'name',
