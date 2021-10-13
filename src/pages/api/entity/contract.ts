@@ -4,6 +4,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
@@ -32,12 +33,12 @@ export class Contract {
   installment?: number
 
   // FK
-  @ManyToOne(() => Project, (project) => project.project_id, {
+  @OneToOne(() => Project, (project) => project.project_id, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'project_id' })
-  projects?: Project[]
+  project!: Project
 
   @CreateDateColumn({ type: 'timestamptz' })
   readonly createdAt!: Date

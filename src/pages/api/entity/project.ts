@@ -7,6 +7,7 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
@@ -48,11 +49,11 @@ export class Project {
   })
   fileLists?: FileList[]
 
-  @OneToMany(() => Contract, (Contract) => Contract.contract_id, {
+  @OneToOne(() => Contract, (Contract) => Contract.contract_id, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  contracts?: Contract[]
+  contract?: Contract
 
   @OneToMany(
     () => ProjectFurniture,
