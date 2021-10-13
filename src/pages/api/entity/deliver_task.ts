@@ -36,7 +36,7 @@ export class DeliverTask {
     nullable: false,
   })
   @JoinColumn({ name: 'project_id' })
-  project!: Project
+  project!: Partial<Project>
 
   @OneToMany('Receipt', 'DeliverTask', {
     onDelete: 'CASCADE',

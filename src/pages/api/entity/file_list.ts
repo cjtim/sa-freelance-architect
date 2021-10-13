@@ -35,7 +35,7 @@ export class FileList {
     nullable: false,
   })
   @JoinColumn({ name: 'project_id' })
-  project!: Project
+  project!: Partial<Project>
 
   @CreateDateColumn({ type: 'timestamptz' })
   readonly created_at!: Date

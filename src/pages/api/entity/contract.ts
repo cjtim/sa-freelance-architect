@@ -35,7 +35,7 @@ export class Contract {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  project!: Project
+  project!: Partial<Project>
 
   @CreateDateColumn({ type: 'timestamptz' })
   readonly created_at!: Date

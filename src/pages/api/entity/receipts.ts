@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -28,12 +29,14 @@ export class Receipt {
   @Column({ nullable: true })
   receipt_img_url?: Date
 
+  // FK - not null
   @OneToMany('DeliverTask', 'Receipt', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,
   })
-  deliverTask!: DeliverTask
+  @JoinColumn({ name: 'task_id' })
+  deliverTask!: Partial<DeliverTask>
 
   @CreateDateColumn({ type: 'timestamptz' })
   readonly created_at!: Date

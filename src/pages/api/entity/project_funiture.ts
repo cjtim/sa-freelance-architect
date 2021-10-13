@@ -25,7 +25,7 @@ export class ProjectFurniture {
     nullable: false,
   })
   @JoinColumn({ name: 'project_id' })
-  project!: Project
+  project!: Partial<Project>
 
   // FK
   @ManyToOne('Furniture', 'ProjectFurniture', {
@@ -34,7 +34,7 @@ export class ProjectFurniture {
     nullable: false,
   })
   @JoinColumn({ name: 'furniture_id' })
-  furniture!: Furniture
+  furniture!: Partial<Furniture>
 
   @CreateDateColumn({ type: 'timestamptz' })
   readonly created_at!: Date

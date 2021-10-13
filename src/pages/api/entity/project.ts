@@ -33,9 +33,6 @@ export class Project {
   @Column()
   status!: 'NOT SIGNING' | 'DONE'
 
-  @Column()
-  lineUid!: string
-
   @OneToMany('FileList', 'Project', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -61,7 +58,7 @@ export class Project {
     nullable: false,
   })
   @JoinColumn({ name: 'customer_id' })
-  customer!: Customer
+  customer!: Partial<Customer>
 
   // FK - not null
   @ManyToOne('Architect', 'Project', {
@@ -70,7 +67,7 @@ export class Project {
     nullable: false,
   })
   @JoinColumn({ name: 'architect_id' })
-  architect!: Architect
+  architect!: Partial<Architect>
 
   @CreateDateColumn({ type: 'timestamptz' })
   readonly created_at!: Date
