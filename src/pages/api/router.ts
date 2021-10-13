@@ -2,8 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express'
 import { getRepository } from 'typeorm'
 import { apiEndpoints } from '@/config'
 import { BucketServices } from './services/bucket'
-import { Files } from './entity/file_list'
-import { Project } from './entity/project'
+import { Customer, FileList, Project } from './entity'
 
 const api = Router()
 
@@ -15,11 +14,11 @@ api.get(
       const repo = getRepository<Project>('Project')
       if (id) {
         const project = await repo.findOne({
-          where: { id, lineUid: req.user.userId },
+          where: { project_id: id },
         })
         return res.json(project)
       }
-      const all = await repo.find({ where: { lineUid: req.user.userId } })
+      const all = await repo.find()
       return res.json(all)
     } catch (e) {
       return next(e)
@@ -46,7 +45,7 @@ api.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.query
-      const fileRepo = getRepository<Files>('Files')
+      const fileRepo = getRepository<FileList>('FileList')
       const files = await fileRepo.find({ where: { project: Number(id) } })
       return res.json(files)
     } catch (e) {
@@ -61,11 +60,11 @@ api.put(
     try {
       const { ref, id }: { ref: string; id: string } = req.body
       const url = await BucketServices.uploadMetadata(ref, req.body.uuid)
-      const fileRepo = getRepository<Files>('Files')
+      const fileRepo = getRepository<FileList>('FileList')
       await fileRepo.insert({
         url,
         name: ref.split('/').pop() || ref,
-        project: Number(id),
+        project: { project_id: Number(id) },
       })
       return res.send(url)
     } catch (e) {
@@ -80,7 +79,7 @@ api.delete(
     try {
       const { id }: { id: string } = req.body
       // const url = await BucketServices.uploadMetadata(ref, req.body.uuid)
-      const fileRepo = getRepository<Files>('Files')
+      const fileRepo = getRepository<FileList>('FileList')
       await fileRepo.delete({ file_id: Number(id) })
       return res.sendStatus(200)
     } catch (e) {
@@ -89,4 +88,23 @@ api.delete(
   },
 )
 
+api.get(
+  apiEndpoints.customers,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id }: { id: string } = req.body
+      const customerRepo = getRepository<Customer>('Customer')
+      if (id) {
+        const customers = await customerRepo.find({
+          where: { customer_id: Number(id) },
+        })
+        return res.json(customers)
+      }
+      const customers = await customerRepo.find()
+      return res.json(customers)
+    } catch (e) {
+      return next(e)
+    }
+  },
+)
 export { api }

@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import ProjectReducer from '../slices/projects'
+import CustomerReducer from '../slices/customer'
 
 export const store = configureStore({
   reducer: {
     projects: ProjectReducer,
+    customers: CustomerReducer,
   },
 })
 

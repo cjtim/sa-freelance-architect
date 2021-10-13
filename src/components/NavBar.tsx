@@ -81,6 +81,9 @@ export default function NavBar(): JSX.Element {
             <Link href="/projects" as={NextLink}>
               <Button mx={2}>Projects</Button>
             </Link>
+            <Link href="/customers" as={NextLink}>
+              <Button mx={2}>Customers</Button>
+            </Link>
             {/* <Link href="/liff/urls" p={2}>
               <Button>My Urls</Button>
             </Link>
