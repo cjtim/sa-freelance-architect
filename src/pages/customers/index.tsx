@@ -21,20 +21,10 @@ const CustomerListPage: React.FC = () => {
     {
       Header: 'Name',
       accessor: 'name',
-      Cell: ({ value, row }) => (
-        <Link as={NextLink} href={`/customers/${row.original.customer_id}`}>
-          <a>{value}</a>
-        </Link>
-      ),
     },
     {
       Header: 'Phone',
       accessor: 'phone',
-      Cell: ({ value, row }) => (
-        <Link as={NextLink} href={`/projects/${row.original.customer_id}`}>
-          <a>{value}</a>
-        </Link>
-      ),
     },
   ]
 
@@ -47,7 +37,7 @@ const CustomerListPage: React.FC = () => {
           <Button
             marginLeft="auto"
             colorScheme="green"
-            onClick={() => router.push('/projects/create')}
+            onClick={() => router.push('/customers/create')}
           >
             Create
           </Button>

@@ -48,8 +48,8 @@ export const fetchCustomer = createAsyncThunk(
   },
 )
 
-export const createProject = createAsyncThunk(
-  'customer/createProject',
+export const createCustomer = createAsyncThunk(
+  'customer/createCustomer',
   async (project: NewRow<Customer>) => {
     const { data } = await backendInstance.post<any>(
       apiEndpoints.customers,
@@ -78,19 +78,19 @@ export const customerSlice = createSlice({
         },
       )
       .addMatcher(
-        isPending(fetchCustomers, fetchCustomer, createProject),
+        isPending(fetchCustomers, fetchCustomer, createCustomer),
         (state) => {
           state.loading = true
         },
       )
       .addMatcher(
-        isFulfilled(fetchCustomers, fetchCustomer, createProject),
+        isFulfilled(fetchCustomers, fetchCustomer, createCustomer),
         (state) => {
           state.loading = false
         },
       )
       .addMatcher(
-        isRejected(fetchCustomers, fetchCustomer, createProject),
+        isRejected(fetchCustomers, fetchCustomer, createCustomer),
         (state) => {
           state.loading = false
         },

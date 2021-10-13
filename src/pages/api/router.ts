@@ -107,4 +107,17 @@ api.get(
     }
   },
 )
+api.post(
+  apiEndpoints.customers,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const body = req.body as Customer
+      const repo = getRepository<Customer>('Customer')
+      const insert = await repo.insert(body)
+      return res.json(insert.identifiers)
+    } catch (e) {
+      return next(e)
+    }
+  },
+)
 export { api }
