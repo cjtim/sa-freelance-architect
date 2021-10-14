@@ -24,7 +24,7 @@ const ProjectList: React.FC = () => {
       Header: 'Name',
       accessor: 'name',
       Cell: ({ value, row }) => (
-        <Link as={NextLink} href={`/projects/${row.original.id}`}>
+        <Link as={NextLink} href={`/projects/${row.original.project_id}`}>
           <a>{value}</a>
         </Link>
       ),
