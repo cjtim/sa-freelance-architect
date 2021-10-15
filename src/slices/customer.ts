@@ -11,6 +11,7 @@ import {
 
 import { Customer } from '@/pages/api/entity'
 import { NewRow } from '@/pages/api/interface/common'
+import { sortBy } from '@/utils/sort'
 
 interface CustomerState {
   customers: Customer[]
@@ -68,7 +69,7 @@ export const customerSlice = createSlice({
       .addCase(
         fetchCustomers.fulfilled.type,
         (state, action: PayloadAction<Customer[]>) => {
-          state.customers = action.payload
+          state.customers = sortBy(action.payload, 'name')
         },
       )
       .addCase(

@@ -29,6 +29,11 @@ const ProjectList: React.FC = () => {
         </Link>
       ),
     },
+    {
+      Header: 'Customer name',
+      accessor: 'customer',
+      Cell: ({ value }) => value?.name,
+    },
   ]
 
   return (
