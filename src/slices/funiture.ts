@@ -65,6 +65,14 @@ export const createFurniture = createAsyncThunk(
   },
 )
 
+export const deleteFurniture = createAsyncThunk(
+  'furnitures/deleteFurniture',
+  async (furniture_id: number) =>
+    backendInstance.delete(apiEndpoints.furnitures, {
+      data: { furniture_id },
+    }),
+)
+
 export const furnitureSlice = createSlice({
   name: 'furnitures',
   initialState,
@@ -83,24 +91,15 @@ export const furnitureSlice = createSlice({
           state.furniture = action.payload
         },
       )
-      .addMatcher(
-        isPending(fetchFurnitures, fetchFurniture, createFurniture),
-        (state) => {
-          state.loading = true
-        },
-      )
-      .addMatcher(
-        isFulfilled(fetchFurnitures, fetchFurniture, createFurniture),
-        (state) => {
-          state.loading = false
-        },
-      )
-      .addMatcher(
-        isRejected(fetchFurnitures, fetchFurniture, createFurniture),
-        (state) => {
-          state.loading = false
-        },
-      )
+      .addMatcher(isPending(), (state) => {
+        state.loading = true
+      })
+      .addMatcher(isFulfilled(), (state) => {
+        state.loading = false
+      })
+      .addMatcher(isRejected(), (state) => {
+        state.loading = false
+      })
   },
 })
 

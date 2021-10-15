@@ -20,6 +20,7 @@ api.post(apiEndpoints.customers, CustomerController.create)
 // Furniture
 api.get(apiEndpoints.furnitures, FurnitureController.get)
 api.post(apiEndpoints.furnitures, FurnitureController.create)
+api.delete(apiEndpoints.furnitures, FurnitureController.delete)
 
 api.get(
   apiEndpoints.files,

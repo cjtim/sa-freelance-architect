@@ -2,7 +2,7 @@ import NavBar from '@/components/NavBar'
 import PageLayout from '@/components/PageLayout'
 import BaseTable from '@/components/Table/BaseTable'
 import { Furniture } from '@/pages/api/entity'
-import { fetchFurnitures } from '@/slices/funiture'
+import { deleteFurniture, fetchFurnitures } from '@/slices/funiture'
 import { useAppSelector, useAppDispatch } from '@/store/hook'
 import { Container, Flex, Heading, Button, Link, Image } from '@chakra-ui/react'
 import NextLink from 'next/link'
@@ -15,6 +15,10 @@ const FurnituresList: React.FC = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
 
+  const handleDelete = async (furniture_id: number) => {
+    await dispatch(deleteFurniture(furniture_id))
+    dispatch(fetchFurnitures())
+  }
   useEffect(() => {
     dispatch(fetchFurnitures())
   }, [dispatch])
@@ -37,6 +41,18 @@ const FurnituresList: React.FC = () => {
     {
       Header: 'Price',
       accessor: 'price_per_unit',
+    },
+    {
+      Header: 'Delete',
+      accessor: undefined,
+      Cell: ({ row }: any) => (
+        <Button
+          colorScheme="red"
+          onClick={() => handleDelete(row.original.furniture_id)}
+        >
+          Delete
+        </Button>
+      ),
     },
   ]
 
