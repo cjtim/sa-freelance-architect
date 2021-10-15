@@ -26,7 +26,7 @@ async function initalLine() {
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
   const [loggingin, setLoggingin] = useState(true)
-  const [routing, setRouting] = useState(true)
+  const [routing, setRouting] = useState(false)
 
   useEffect(() => {
     router.events.on('routeChangeStart', () => setRouting(true))
