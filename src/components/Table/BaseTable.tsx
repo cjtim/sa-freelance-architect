@@ -1,8 +1,13 @@
 /* eslint-disable no-shadow */
 import {
   Box,
+  Button,
+  ButtonGroup,
   ChakraProps,
   Heading,
+  HStack,
+  Input,
+  Select,
   Table,
   Tbody,
   Td,
@@ -10,6 +15,7 @@ import {
   Thead,
   Tr,
   VStack,
+  Text,
 } from '@chakra-ui/react'
 import React from 'react'
 import {
@@ -39,12 +45,23 @@ const BaseTable = <T extends object = {}>({
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
+    page,
+    rows,
   } = useTable<T>(
     {
       columns,
       data,
+      initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters, // useFilters!
     useGlobalFilter, // useGlobalFilter!
@@ -79,7 +96,7 @@ const BaseTable = <T extends object = {}>({
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {rows.map((row, index) => {
+          {page.map((row, index) => {
             prepareRow(row)
             return (
               <Tr
@@ -98,6 +115,57 @@ const BaseTable = <T extends object = {}>({
           })}
         </Tbody>
       </Table>
+      <HStack justify="space-between" p={2}>
+        <HStack shouldWrapChildren spacing={4}>
+          <ButtonGroup isAttached variant="outline">
+            <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+              {'<<'}
+            </Button>
+            <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
+              {'<'}
+            </Button>
+            <Button onClick={() => nextPage()} disabled={!canNextPage}>
+              {'>'}
+            </Button>
+            <Button
+              onClick={() => gotoPage(pageCount - 1)}
+              disabled={!canNextPage}
+            >
+              {'>>'}
+            </Button>
+          </ButtonGroup>
+          <Box>
+            Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>{' '}
+            | Go to page:{' '}
+            <Input
+              type="number"
+              onChange={(e) => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0
+                gotoPage(page)
+              }}
+              style={{ width: '100px' }}
+            />
+          </Box>
+        </HStack>
+        <HStack shouldWrapChildren spacing={2}>
+          <Text>Total {rows.length} Rows</Text>
+          <Select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value))
+            }}
+          >
+            {[3, 5, 10, 15, 20, 30, 50, 100].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </Select>
+        </HStack>
+      </HStack>
     </Box>
   )
 }
