@@ -54,15 +54,7 @@ const ProjectCreate = () => {
             })}
             onSubmit={async (values, actions) => {
               if (values.name) {
-                await dispatch(
-                  createProject({
-                    name: values.name,
-                    customer: { customer_id: 2 },
-                    estimated_when: new Date(),
-                    started_when: new Date(),
-                    status: 'DONE',
-                  }),
-                )
+                await dispatch(createProject(values))
                 router.push('/projects')
               }
               actions.setSubmitting(false)
@@ -144,12 +136,20 @@ const ProjectCreate = () => {
                           (errors.customer && touched.customer) || false
                         }
                       >
-                        <FormLabel htmlFor="customer">Customer name</FormLabel>
+                        <FormLabel htmlFor="customer_id">
+                          Customer name
+                        </FormLabel>
 
                         <Select
                           {...field}
-                          id="customer"
+                          id="customer_id"
                           placeholder="Select option"
+                          onChange={(e) =>
+                            setFieldValue(
+                              'customer.customer_id',
+                              e.target.value,
+                            )
+                          }
                         >
                           {customers?.map((customer) => (
                             <option value={customer.customer_id}>
