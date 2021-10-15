@@ -122,42 +122,15 @@ export const projectsSlice = createSlice({
           state.files = action.payload
         },
       )
-      .addMatcher(
-        isPending(
-          fetchProjects,
-          fetchProject,
-          createProject,
-          uploadFile,
-          fetchFiles,
-        ),
-        (state) => {
-          state.loading = true
-        },
-      )
-      .addMatcher(
-        isFulfilled(
-          fetchProjects,
-          fetchProject,
-          createProject,
-          uploadFile,
-          fetchFiles,
-        ),
-        (state) => {
-          state.loading = false
-        },
-      )
-      .addMatcher(
-        isRejected(
-          fetchProjects,
-          fetchProject,
-          createProject,
-          uploadFile,
-          fetchFiles,
-        ),
-        (state) => {
-          state.loading = false
-        },
-      )
+      .addMatcher(isPending(), (state) => {
+        state.loading = true
+      })
+      .addMatcher(isFulfilled(), (state) => {
+        state.loading = false
+      })
+      .addMatcher(isRejected(), (state) => {
+        state.loading = false
+      })
   },
 })
 

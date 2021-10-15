@@ -78,24 +78,15 @@ export const customerSlice = createSlice({
           state.customer = action.payload
         },
       )
-      .addMatcher(
-        isPending(fetchCustomers, fetchCustomer, createCustomer),
-        (state) => {
-          state.loading = true
-        },
-      )
-      .addMatcher(
-        isFulfilled(fetchCustomers, fetchCustomer, createCustomer),
-        (state) => {
-          state.loading = false
-        },
-      )
-      .addMatcher(
-        isRejected(fetchCustomers, fetchCustomer, createCustomer),
-        (state) => {
-          state.loading = false
-        },
-      )
+      .addMatcher(isPending(), (state) => {
+        state.loading = true
+      })
+      .addMatcher(isFulfilled(), (state) => {
+        state.loading = false
+      })
+      .addMatcher(isRejected(), (state) => {
+        state.loading = false
+      })
   },
 })
 
