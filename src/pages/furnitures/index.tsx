@@ -4,7 +4,7 @@ import BaseTable from '@/components/Table/BaseTable'
 import { Furniture } from '@/pages/api/entity'
 import { fetchFurnitures } from '@/slices/funiture'
 import { useAppSelector, useAppDispatch } from '@/store/hook'
-import { Container, Flex, Heading, Button, Link } from '@chakra-ui/react'
+import { Container, Flex, Heading, Button, Link, Image } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
@@ -22,12 +22,21 @@ const FurnituresList: React.FC = () => {
   const columns: Column<Furniture>[] = [
     {
       Header: 'Name',
+      accessor: 'img',
+      Cell: ({ value }) => <Image src={value} height="100px" />,
+    },
+    {
+      Header: 'Name',
       accessor: 'furniture_name',
       Cell: ({ value, row }) => (
         <Link as={NextLink} href={`/projects/${row.original.furniture_name}`}>
           <a>{value}</a>
         </Link>
       ),
+    },
+    {
+      Header: 'Price',
+      accessor: 'price_per_unit',
     },
   ]
 

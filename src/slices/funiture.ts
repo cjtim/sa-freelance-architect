@@ -11,6 +11,8 @@ import {
 
 import { Furniture } from '@/pages/api/entity'
 import { NewRow } from '@/pages/api/interface/common'
+import { getBucket } from '@/lib/firebase'
+import { ref, uploadBytes } from 'firebase/storage'
 
 interface FurnitureState {
   furnitures: Furniture[]
@@ -50,10 +52,14 @@ export const fetchFurniture = createAsyncThunk(
 
 export const createFurniture = createAsyncThunk(
   'furnitures/createFurniture',
-  async (project: NewRow<Furniture>) => {
-    const { data } = await backendInstance.post<any>(
+  async ({ furniture, file }: { furniture: NewRow<Furniture>; file: File }) => {
+    const storage = getBucket()
+    const location = `furnitures/${file.name}`
+    uploadBytes(ref(storage, location), file)
+
+    const { data } = await backendInstance.post<Furniture>(
       apiEndpoints.furnitures,
-      project,
+      { furniture, ref: location },
     )
     return data
   },

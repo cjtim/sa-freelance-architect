@@ -39,14 +39,8 @@ api.put(
   apiEndpoints.files,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { ref, id }: { ref: string; id: string } = req.body
-      const url = await BucketServices.uploadMetadata(ref, req.body.uuid)
-      const fileRepo = getRepository<FileList>('FileList')
-      await fileRepo.insert({
-        url,
-        name: ref.split('/').pop() || ref,
-        project: { project_id: Number(id) },
-      })
+      const { ref, uuid }: { ref: string; uuid: string } = req.body
+      const url = await BucketServices.uploadMetadata(ref, uuid)
       return res.send(url)
     } catch (e) {
       return next(e)
