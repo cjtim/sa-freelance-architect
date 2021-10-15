@@ -30,7 +30,7 @@ export class DeliverTask {
   actual_date?: Date
 
   // FK - not null
-  @ManyToOne('Project', 'DeliverTask', {
+  @ManyToOne(() => Project, (project) => project.deliverTasks, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,
@@ -42,6 +42,7 @@ export class DeliverTask {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({ name: 'receipt_id' })
   receipts?: Receipt[]
 
   @CreateDateColumn({ type: 'timestamptz' })

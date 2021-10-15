@@ -30,7 +30,7 @@ export class Receipt {
   receipt_img_url?: Date
 
   // FK - not null
-  @OneToMany('DeliverTask', 'Receipt', {
+  @OneToMany(() => DeliverTask, (deliver) => deliver.receipts, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,

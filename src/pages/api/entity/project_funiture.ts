@@ -28,7 +28,7 @@ export class ProjectFurniture {
   project!: Partial<Project>
 
   // FK
-  @ManyToOne('Furniture', 'ProjectFurniture', {
+  @ManyToOne(() => Furniture, (furniture) => furniture.projectFurniture, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,

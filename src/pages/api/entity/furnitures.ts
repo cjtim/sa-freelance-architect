@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -39,10 +40,15 @@ export class Furniture {
   @Column()
   img!: string
 
-  @OneToMany('ProjectFurniture', 'Furniture', {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
+  @OneToMany(
+    () => ProjectFurniture,
+    (projectFurniture) => projectFurniture.furniture,
+    {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
+  )
+  @JoinColumn({ name: 'furniture_id' })
   projectFurniture?: ProjectFurniture[]
 
   @CreateDateColumn({ type: 'timestamptz' })

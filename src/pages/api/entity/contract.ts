@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -31,10 +32,11 @@ export class Contract {
   installment?: number
 
   // FK
-  @OneToOne('Project', 'Contract', {
+  @OneToOne(() => Project, (project) => project.contract, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({ name: 'project_id' })
   project!: Partial<Project>
 
   @CreateDateColumn({ type: 'timestamptz' })

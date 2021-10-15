@@ -29,7 +29,7 @@ export class FileList {
   notes?: string
 
   // FK
-  @ManyToOne('Project', 'FileList', {
+  @ManyToOne(() => Project, (project) => project.fileLists, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,

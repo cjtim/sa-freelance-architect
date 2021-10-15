@@ -9,7 +9,14 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { Architect, Contract, Customer, FileList, ProjectFurniture } from '.'
+import {
+  Architect,
+  Contract,
+  Customer,
+  DeliverTask,
+  FileList,
+  ProjectFurniture,
+} from '.'
 
 @Entity()
 export class Project {
@@ -32,19 +39,25 @@ export class Project {
   @Column()
   status!: 'NOT SIGNING' | 'DONE'
 
-  @OneToMany('FileList', 'Project', {
+  @OneToMany(() => FileList, (i) => i.project, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   fileLists?: FileList[]
 
-  @OneToOne('Contract', 'Project', {
+  @OneToMany(() => DeliverTask, (i) => i.project, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  deliverTasks?: DeliverTask[]
+
+  @OneToOne(() => Contract, (i) => i.project, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   contract?: Contract
 
-  @OneToMany('ProjectFurniture', 'Project', {
+  @OneToMany(() => ProjectFurniture, (i) => i.project, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
@@ -60,7 +73,7 @@ export class Project {
   customer?: Partial<Customer>
 
   // FK - not null
-  @ManyToOne('Architect', 'Project', {
+  @ManyToOne(() => Architect, (architect) => architect.projects, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,
