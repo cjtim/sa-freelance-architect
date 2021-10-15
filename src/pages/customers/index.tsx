@@ -26,6 +26,11 @@ const CustomerListPage: React.FC = () => {
       Header: 'Phone',
       accessor: 'phone',
     },
+    {
+      Header: 'Owned Project',
+      accessor: 'projects',
+      Cell: ({ value }) => value?.length,
+    },
   ]
 
   return (

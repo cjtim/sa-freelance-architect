@@ -10,10 +10,11 @@ export default class CustomerController {
       if (id) {
         const customers = await customerRepo.find({
           where: { customer_id: Number(id) },
+          relations: ['projects'],
         })
         return res.json(customers)
       }
-      const customers = await customerRepo.find()
+      const customers = await customerRepo.find({ relations: ['projects'] })
       return res.json(customers)
     } catch (e) {
       return next(e)

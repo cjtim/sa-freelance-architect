@@ -51,7 +51,7 @@ export class Project {
   projectFurniture?: ProjectFurniture[]
 
   // FK - not null
-  @ManyToOne('Customer', 'Project', {
+  @ManyToOne(() => Customer, (customer) => customer.projects, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,

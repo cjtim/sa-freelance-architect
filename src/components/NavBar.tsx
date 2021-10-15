@@ -17,7 +17,6 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import NextLink from 'next/link'
-
 import { BsHouseFill } from 'react-icons/bs'
 
 interface Profile {

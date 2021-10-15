@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -24,10 +25,11 @@ export class Customer {
   @Column({ length: '10' })
   phone!: string
 
-  @OneToMany('Project', 'Customer', {
+  @OneToMany(() => Project, (project) => project.customer, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({ name: 'project_id' })
   projects?: Project[]
 
   @CreateDateColumn({ type: 'timestamptz' })
