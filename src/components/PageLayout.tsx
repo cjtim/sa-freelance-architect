@@ -10,10 +10,16 @@ export default function PageLayout({
   windowTitle: string
   children?: any
 }): JSX.Element {
-  const { loading: photoLoading } = useAppSelector((state) => state.projects)
+  const { loading: projectLoading } = useAppSelector((state) => state.projects)
+  const { loading: customerLoading } = useAppSelector(
+    (state) => state.customers,
+  )
+  const { loading: furnitureLoading } = useAppSelector(
+    (state) => state.furnitures,
+  )
 
   // centralize loading
-  const loading = photoLoading
+  const loading = projectLoading || customerLoading || furnitureLoading
   return (
     <>
       <Head>
