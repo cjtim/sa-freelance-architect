@@ -1,11 +1,9 @@
-import { NextFunction, Request, Response, Router } from 'express'
-import { getRepository } from 'typeorm'
+import { Router } from 'express'
 import { apiEndpoints } from '@/config'
-import { BucketServices } from '../services/bucket'
-import { FileList } from '../entity'
 import ProjectController from '../controller/project'
 import CustomerController from '../controller/customer'
 import FurnitureController from '../controller/furniture'
+import FileListController from '../controller/file_list'
 
 const api = Router()
 
@@ -22,46 +20,7 @@ api.get(apiEndpoints.furnitures, FurnitureController.get)
 api.post(apiEndpoints.furnitures, FurnitureController.create)
 api.delete(apiEndpoints.furnitures, FurnitureController.delete)
 
-api.get(
-  apiEndpoints.files,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { id } = req.query
-      const fileRepo = getRepository<FileList>('FileList')
-      const files = await fileRepo.find({ where: { project: Number(id) } })
-      return res.json(files)
-    } catch (e) {
-      return next(e)
-    }
-  },
-)
-// update file metadata
-api.put(
-  apiEndpoints.files,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { ref, uuid }: { ref: string; uuid: string } = req.body
-      const url = await BucketServices.uploadMetadata(ref, uuid)
-      return res.send(url)
-    } catch (e) {
-      return next(e)
-    }
-  },
-)
-
-api.delete(
-  apiEndpoints.files,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { id }: { id: string } = req.body
-      // const url = await BucketServices.uploadMetadata(ref, req.body.uuid)
-      const fileRepo = getRepository<FileList>('FileList')
-      await fileRepo.delete({ file_id: Number(id) })
-      return res.sendStatus(200)
-    } catch (e) {
-      return next(e)
-    }
-  },
-)
+api.get(apiEndpoints.fileList, FileListController.get)
+api.post(apiEndpoints.fileList, FileListController.create)
 
 export { api }

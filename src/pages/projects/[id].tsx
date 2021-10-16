@@ -10,23 +10,35 @@ import {
   IconButton,
   Input,
   Link,
+  HStack,
+  Text,
 } from '@chakra-ui/react'
 import { AddIcon, ExternalLinkIcon } from '@chakra-ui/icons'
-import { fetchFiles, fetchProject, uploadFile } from '@/slices/projects'
+import { fetchProject } from '@/slices/projects'
 import { Column } from 'react-table'
 import BaseTable from '@/components/Table/BaseTable'
+import { createFile } from '@/slices/file_list'
 import { FileList } from '../api/entity/file_list'
 
 const ProjectDetails = () => {
   const router = useRouter()
   const { id } = router.query
   const dispatch = useAppDispatch()
-  const { project, files } = useAppSelector((state) => state.projects)
+  const { project } = useAppSelector((state) => state.projects)
   const [file, setFile] = useState<File>()
 
   const onUpload = async () => {
     if (file) {
-      await dispatch(uploadFile({ id: Number(id as string), file }))
+      await dispatch(
+        createFile({
+          fileList: {
+            name: file.name,
+            project: { project_id: Number(id) },
+            url: '',
+          },
+          file,
+        }),
+      )
       router.reload()
     }
   }
@@ -37,7 +49,6 @@ const ProjectDetails = () => {
         return router.back()
       }
       dispatch(fetchProject(idInt))
-      dispatch(fetchFiles(idInt))
     }
   }, [dispatch, id])
 
@@ -58,8 +69,9 @@ const ProjectDetails = () => {
     <PageLayout windowTitle={`Project | ${id}`}>
       <NavBar />
       <Container maxW="container.xl">
-        <Flex py={4}>
+        <HStack py={4}>
           <Heading>{project.name}</Heading>
+          <Text>FileList</Text>
           <Flex marginLeft="auto">
             <Input
               type="file"
@@ -76,9 +88,9 @@ const ProjectDetails = () => {
               onClick={onUpload}
             />
           </Flex>
-        </Flex>
+        </HStack>
 
-        <BaseTable columns={columns} data={files} />
+        <BaseTable columns={columns} data={project?.fileLists || []} />
       </Container>
     </PageLayout>
   )

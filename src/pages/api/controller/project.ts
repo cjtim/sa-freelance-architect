@@ -9,11 +9,11 @@ export default class ProjectController {
     if (id) {
       const project = await repo.findOne({
         where: { project_id: id },
-        relations: ['customer'],
+        relations: ['customer', 'fileLists'],
       })
       return res.json(project)
     }
-    const all = await repo.find({ relations: ['customer'] })
+    const all = await repo.find({ relations: ['customer', 'fileLists'] })
     return res.json(all)
   }
 

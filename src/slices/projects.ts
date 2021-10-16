@@ -1,8 +1,5 @@
 import backendInstance from '@/lib/axios'
-import { v4 as uuidv4 } from 'uuid'
-import { initializeApp, getApps, getApp } from 'firebase/app'
-import { getStorage, ref, uploadBytes } from 'firebase/storage'
-import { apiEndpoints, NEXT_CONFIG } from '@/config'
+import { apiEndpoints } from '@/config'
 import {
   createAsyncThunk,
   createSlice,
@@ -13,31 +10,16 @@ import {
 } from '@reduxjs/toolkit'
 
 import { Project } from '@/pages/api/entity/project'
-import { FileList } from '@/pages/api/entity/file_list'
-import { NewRow } from '@/pages/api/interface/common'
-
-if (!getApps().length) {
-  initializeApp({
-    storageBucket: NEXT_CONFIG.BUCKET_NAME,
-    projectId: NEXT_CONFIG.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    apiKey: NEXT_CONFIG.NEXT_PUBLIC_FIREBASE_API_KEY,
-  })
-}
-
-// Get a reference to the storage service, which is used to create references in your storage bucket
-const storage = getStorage(getApp())
 
 interface ProjectState {
   projects: Project[]
   project: Project
-  files: FileList[]
   loading: boolean
 }
 
 const initialState: ProjectState = {
   projects: [],
   project: {} as Project,
-  files: [],
   loading: false,
 }
 
@@ -70,33 +52,6 @@ export const createProject = createAsyncThunk(
     return data
   },
 )
-export const uploadFile = createAsyncThunk(
-  'projects/uploadFile',
-  async ({ id, file }: { id: number; file: File }) => {
-    const liff = (await import('@line/liff')).default
-    await liff.ready
-    const profile = await liff.getProfile()
-    const uuid = uuidv4()
-    const destination = `${profile.userId}/${file.name}`
-    await uploadBytes(ref(storage, destination), file)
-    const { data } = await backendInstance.put<string>(apiEndpoints.files, {
-      id,
-      ref: destination,
-      uuid,
-    })
-    return data
-  },
-)
-
-export const fetchFiles = createAsyncThunk(
-  'projects/fetchFiles',
-  async (id: number) => {
-    const { data } = await backendInstance.get<FileList[]>(apiEndpoints.files, {
-      params: { id },
-    })
-    return data
-  },
-)
 
 export const projectsSlice = createSlice({
   name: 'projects',
@@ -114,12 +69,6 @@ export const projectsSlice = createSlice({
         fetchProject.fulfilled.type,
         (state, action: PayloadAction<Project>) => {
           state.project = action.payload
-        },
-      )
-      .addCase(
-        fetchFiles.fulfilled.type,
-        (state, action: PayloadAction<FileList[]>) => {
-          state.files = action.payload
         },
       )
       .addMatcher(isPending(), (state) => {
