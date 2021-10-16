@@ -1,13 +1,11 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm'
 import {
   Architect,
@@ -17,10 +15,12 @@ import {
   FileList,
   ProjectFurniture,
 } from '.'
+import { DefaultColumns } from './_default'
 
 @Entity()
-export class Project {
+export class Project extends DefaultColumns {
   constructor(job: Partial<Project>) {
+    super()
     Object.assign(this, job)
   }
 
@@ -80,10 +80,4 @@ export class Project {
   })
   @JoinColumn({ name: 'architect_id' })
   architect?: Partial<Architect>
-
-  @CreateDateColumn({ type: 'timestamptz' })
-  readonly created_at!: Date
-
-  @UpdateDateColumn({ type: 'timestamptz' })
-  readonly updated_at!: Date
 }

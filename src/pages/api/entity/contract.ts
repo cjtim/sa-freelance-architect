@@ -1,18 +1,18 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
 import { Project } from '.'
+import { DefaultColumns } from './_default'
 
 @Entity()
-export class Contract {
+export class Contract extends DefaultColumns {
   constructor(job: NewRow<Contract>) {
+    super()
     Object.assign(this, job)
   }
 
@@ -38,10 +38,4 @@ export class Contract {
   })
   @JoinColumn({ name: 'project_id' })
   project!: Partial<Project>
-
-  @CreateDateColumn({ type: 'timestamptz' })
-  readonly created_at!: Date
-
-  @UpdateDateColumn({ type: 'timestamptz' })
-  readonly updated_at!: Date
 }

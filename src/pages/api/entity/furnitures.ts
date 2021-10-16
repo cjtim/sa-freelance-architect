@@ -1,18 +1,18 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
 import { ProjectFurniture } from '.'
+import { DefaultColumns } from './_default'
 
 @Entity()
-export class Furniture {
+export class Furniture extends DefaultColumns {
   constructor(fur: NewRow<Furniture>) {
+    super()
     Object.assign(this, fur)
   }
 
@@ -50,10 +50,4 @@ export class Furniture {
   )
   @JoinColumn({ name: 'furniture_id' })
   projectFurniture?: ProjectFurniture[]
-
-  @CreateDateColumn({ type: 'timestamptz' })
-  readonly created_at!: Date
-
-  @UpdateDateColumn({ type: 'timestamptz' })
-  readonly updated_at!: Date
 }

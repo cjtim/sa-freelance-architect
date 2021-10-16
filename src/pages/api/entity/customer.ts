@@ -1,18 +1,18 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm'
 import { NewRow } from '../interface/common'
 import { Project } from '.'
+import { DefaultColumns } from './_default'
 
 @Entity()
-export class Customer {
+export class Customer extends DefaultColumns {
   constructor(customer: NewRow<Customer>) {
+    super()
     Object.assign(this, customer)
   }
 
@@ -31,10 +31,4 @@ export class Customer {
   })
   @JoinColumn({ name: 'project_id' })
   projects?: Project[]
-
-  @CreateDateColumn({ type: 'timestamptz' })
-  readonly created_at?: Date
-
-  @UpdateDateColumn({ type: 'timestamptz' })
-  readonly updated_at?: Date
 }
