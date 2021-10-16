@@ -26,4 +26,11 @@ export default class FileListController {
     })
     return res.json(result)
   }
+
+  static async delete(req: Request, res: Response) {
+    const { file_id }: { file_id: number } = req.body
+    const repo = getRepository<FileList>('FileList')
+    await repo.delete(file_id)
+    return res.sendStatus(200)
+  }
 }

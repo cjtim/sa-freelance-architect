@@ -22,5 +22,6 @@ api.delete(apiEndpoints.furnitures, FurnitureController.delete)
 
 api.get(apiEndpoints.fileList, FileListController.get)
 api.post(apiEndpoints.fileList, FileListController.create)
+api.delete(apiEndpoints.fileList, FileListController.delete)
 
 export { api }

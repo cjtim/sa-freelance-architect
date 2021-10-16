@@ -25,7 +25,7 @@ export class Project {
   }
 
   @PrimaryGeneratedColumn()
-  readonly project_id?: number
+  readonly project_id!: number
 
   @Column()
   name!: string
@@ -82,8 +82,8 @@ export class Project {
   architect?: Partial<Architect>
 
   @CreateDateColumn({ type: 'timestamptz' })
-  readonly created_at?: Date
+  readonly created_at!: Date
 
   @UpdateDateColumn({ type: 'timestamptz' })
-  readonly updated_at?: Date
+  readonly updated_at!: Date
 }

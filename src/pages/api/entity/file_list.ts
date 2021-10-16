@@ -17,7 +17,7 @@ export class FileList {
   }
 
   @PrimaryGeneratedColumn()
-  readonly file_id?: number
+  readonly file_id!: number
 
   @Column()
   name!: string
@@ -38,8 +38,8 @@ export class FileList {
   project!: Partial<Project>
 
   @CreateDateColumn({ type: 'timestamptz' })
-  readonly created_at?: Date
+  readonly created_at!: Date
 
   @UpdateDateColumn({ type: 'timestamptz' })
-  readonly updated_at?: Date
+  readonly updated_at!: Date
 }

@@ -1,6 +1,6 @@
 import NavBar from '@/components/NavBar'
 import PageLayout from '@/components/PageLayout'
-import { Project } from '@/pages/api/entity/project'
+import { Project } from '@/pages/api/entity'
 import { fetchCustomers } from '@/slices/customer'
 import { createProject } from '@/slices/projects'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
