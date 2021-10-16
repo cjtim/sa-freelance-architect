@@ -30,6 +30,10 @@ export default class FileListController {
   static async delete(req: Request, res: Response) {
     const { file_id }: { file_id: number } = req.body
     const repo = getRepository<FileList>('FileList')
+    const file = await repo.findOne(file_id)
+    if (file && file.url) {
+      BucketServices.deleteFileFromUrl(file.url)
+    }
     await repo.delete(file_id)
     return res.sendStatus(200)
   }

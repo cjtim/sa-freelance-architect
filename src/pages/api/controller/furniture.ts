@@ -32,6 +32,10 @@ export default class FurnitureController {
   static async delete(req: Request, res: Response) {
     const { furniture_id }: { furniture_id: number } = req.body
     const repo = getRepository<Furniture>('Furniture')
+    const furniture = await repo.findOne(furniture_id)
+    if (furniture && furniture.img) {
+      BucketServices.deleteFileFromUrl(furniture.img)
+    }
     await repo.delete(furniture_id)
     return res.sendStatus(200)
   }

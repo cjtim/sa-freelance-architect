@@ -77,6 +77,19 @@ export class BucketServices {
     }/o/${encodeURIComponent(ref)}?alt=media&token=${uuid}`
   }
 
+  static async deleteFileFromUrl(url: string): Promise<boolean> {
+    const regex =
+      url.match(
+        /^https:\/\/firebasestorage.googleapis.com\/v0\/b\/.*\/o\/(.*)\?.*/,
+      ) || []
+    if (regex.length > 0 && regex[1]) {
+      const ref = decodeURIComponent(regex[1])
+      await bucket.file(ref).delete({ ignoreNotFound: true })
+      return true
+    }
+    return false
+  }
+
   static async remove(path: string): Promise<any> {
     return bucket.file(path).delete()
   }
