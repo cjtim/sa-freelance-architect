@@ -17,9 +17,12 @@ export default function PageLayout({
   const { loading: furnitureLoading } = useAppSelector(
     (state) => state.furnitures,
   )
+  const { loading: FileLoading } = useAppSelector((state) => state.fileList)
 
   // centralize loading
-  const loading = projectLoading || customerLoading || furnitureLoading
+  const loading =
+    projectLoading || customerLoading || furnitureLoading || FileLoading
+
   return (
     <>
       <Head>

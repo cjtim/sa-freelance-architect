@@ -1,5 +1,6 @@
 import backendInstance from '@/lib/axios'
 import { apiEndpoints } from '@/config'
+import { v4 as uuidv4 } from 'uuid'
 import {
   createAsyncThunk,
   createSlice,
@@ -54,8 +55,9 @@ export const createFile = createAsyncThunk(
   'fileList/createFile',
   async ({ file, fileList }: { file: File; fileList: NewRow<FileList> }) => {
     const storage = getBucket()
-    const location = `projects/${fileList.project.project_id}/${file.name}`
-    uploadBytes(ref(storage, location), file)
+    const uuid = uuidv4()
+    const location = `projects/${fileList.project.project_id}/${uuid}-${file.name}`
+    await uploadBytes(ref(storage, location), file)
 
     const { data } = await backendInstance.post<FileList>(
       apiEndpoints.fileList,
