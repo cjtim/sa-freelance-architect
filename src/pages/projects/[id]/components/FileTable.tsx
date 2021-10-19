@@ -1,6 +1,9 @@
 import BaseTable from '@/components/Table/BaseTable'
-import { createFile, deleteFile } from '@/slices/file_list'
-import { fetchProject } from '@/slices/projects'
+import {
+  createFile,
+  deleteFile,
+  fetchFileListByProject,
+} from '@/slices/file_list'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { AddIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import {
@@ -20,9 +23,10 @@ import { formatDate } from '@/utils/date'
 interface Props {
   project_id: number
 }
+
 const FileTable: React.FC<Props> = ({ project_id }) => {
   const dispatch = useAppDispatch()
-  const { project } = useAppSelector((state) => state.projects)
+  const { fileListByProject } = useAppSelector((state) => state.fileList)
   const [file, setFile] = useState<File>()
   const noteRef = useRef<any>(null)
 
@@ -45,7 +49,7 @@ const FileTable: React.FC<Props> = ({ project_id }) => {
 
   const handleDelete = async (file_id: number) => {
     await dispatch(deleteFile(file_id))
-    dispatch(fetchProject(project_id))
+    dispatch(fetchFileListByProject(project_id))
   }
 
   const columns: Column<FileList>[] = [
@@ -82,6 +86,7 @@ const FileTable: React.FC<Props> = ({ project_id }) => {
       ),
     },
   ]
+
   return (
     <>
       <Flex align="center" py={4}>
@@ -104,7 +109,7 @@ const FileTable: React.FC<Props> = ({ project_id }) => {
           />
         </Flex>
       </Flex>
-      <BaseTable columns={columns} data={project?.fileLists || []} />
+      <BaseTable columns={columns} data={fileListByProject || []} />
     </>
   )
 }

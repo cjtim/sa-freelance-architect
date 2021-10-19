@@ -11,4 +11,5 @@ export const apiEndpoints = {
   customers: '/api/customers',
   furnitures: '/api/furnitures',
   fileList: '/api/fileList',
+  contracts: '/api/contracts',
 }
