@@ -10,18 +10,18 @@ export default function PageLayout({
   windowTitle: string
   children?: any
 }): JSX.Element {
-  const { loading: projectLoading } = useAppSelector((state) => state.projects)
-  const { loading: customerLoading } = useAppSelector(
-    (state) => state.customers,
-  )
-  const { loading: furnitureLoading } = useAppSelector(
-    (state) => state.furnitures,
-  )
-  const { loading: FileLoading } = useAppSelector((state) => state.fileList)
+  // const { loading: projectLoading } = useAppSelector((state) => state.projects)
+  // const { loading: customerLoading } = useAppSelector(
+  //   (state) => state.customers,
+  // )
+  // const { loading: furnitureLoading } = useAppSelector(
+  //   (state) => state.furnitures,
+  // )
+  // const { loading: FileLoading } = useAppSelector((state) => state.fileList)
 
   // centralize loading
-  const loading =
-    projectLoading || customerLoading || furnitureLoading || FileLoading
+  const loading = false
+  // projectLoading || customerLoading || furnitureLoading || FileLoading
 
   return (
     <>
