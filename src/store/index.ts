@@ -5,6 +5,7 @@ import CustomerReducer from '../slices/customer'
 import FurnitureReducer from '../slices/funiture'
 import FileListReducer from '../slices/file_list'
 import ContractReducer from '../slices/contract'
+import ProjectFurnitureReducer from '../slices/project_furniture'
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     furnitures: FurnitureReducer,
     fileList: FileListReducer,
     contracts: ContractReducer,
+    projectFurnitures: ProjectFurnitureReducer,
   },
 })
 

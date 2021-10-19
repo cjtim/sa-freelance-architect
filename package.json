@@ -51,6 +51,7 @@
     "react-icons": "4.2.0",
     "react-rainbow-components": "1.27.0",
     "react-redux": "7.2.5",
+    "react-select": "5.1.0",
     "react-table": "7.7.0",
     "redux": "4.1.1",
     "reflect-metadata": "0.1.13",
