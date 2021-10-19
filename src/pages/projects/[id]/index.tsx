@@ -3,7 +3,7 @@ import PageLayout from '@/components/PageLayout'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { Container, Heading, Divider } from '@chakra-ui/react'
+import { Container, Heading, Divider, Button } from '@chakra-ui/react'
 import { fetchProject } from '@/slices/projects'
 import { fetchFileListByProject } from '@/slices/file_list'
 import { fetchContractByProject } from '@/slices/contract'
@@ -37,6 +37,15 @@ const ProjectDetails = () => {
         <FileTable project_id={Number(id)} />
         <Divider />
         <ContractTable project_id={Number(id)} />
+        <Divider />
+        <Button
+          my={4}
+          colorScheme="blue"
+          onClick={() => router.push(`/projects/${id}/furnitures`)}
+        >
+          View Project funitures
+        </Button>
+        <Divider />
       </Container>
     </PageLayout>
   )
