@@ -1,6 +1,6 @@
 import PageLayout from '@/components/PageLayout'
 import BaseTable from '@/components/Table/BaseTable'
-import { Furniture, ProjectFurniture } from '@/pages/api/entity'
+import { Furniture } from '@/pages/api/entity'
 import {
   fetchProjectFurnitures,
   ProjectFurnitureAdd,

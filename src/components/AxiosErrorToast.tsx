@@ -1,7 +1,7 @@
 import backendInstance from '@/lib/axios'
 import { createStandaloneToast } from '@chakra-ui/react'
 import { AxiosError } from 'axios'
-import { useEffect, useCallback, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const AxiosErrorToast = () => {
   const [error, setError] = useState<AxiosError>()
