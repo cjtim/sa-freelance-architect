@@ -14,7 +14,7 @@ const LogoutPage: React.FC = () => {
       }
       router.replace('/')
     })()
-  })
+  }, [])
   return (
     <PageLayout windowTitle="Logout">
       <Flex justify="center" align="center">
