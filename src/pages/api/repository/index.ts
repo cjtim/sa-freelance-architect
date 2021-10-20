@@ -1,28 +1,5 @@
 import { createConnection, getConnection } from 'typeorm'
-import {
-  Architect,
-  Contract,
-  Customer,
-  DeliverTask,
-  FileList,
-  Furniture,
-  ProjectFurniture,
-  Project,
-  Receipt,
-} from '../entity'
 import CONFIG from '../config'
-
-const entities = [
-  Architect,
-  Contract,
-  Customer,
-  DeliverTask,
-  FileList,
-  Furniture,
-  ProjectFurniture,
-  Project,
-  Receipt,
-]
 
 export async function connectDB() {
   try {
@@ -37,6 +14,7 @@ export async function connectDB() {
       PSQL_USERNAME,
       PSQL_DATABASE,
     } = CONFIG
+    const entities = Object.values(await import('../entity'))
     await createConnection({
       type: 'postgres',
       host: PSQL_HOSTNAME,
