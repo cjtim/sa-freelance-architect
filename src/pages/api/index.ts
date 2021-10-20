@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import express, { Response, Request, NextFunction } from 'express'
+import { apiEndpoints } from '@/config'
 import { api } from './router'
 import { connectDB } from './repository'
 import LineMiddleware from './middleware/line'
@@ -19,6 +20,8 @@ app.use(async (req, res, next) => {
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
   next()
 })
+
+app.get(apiEndpoints.healthCheck, (req, res) => res.sendStatus(200))
 
 app.use(LineMiddleware.liffVerify, api)
 

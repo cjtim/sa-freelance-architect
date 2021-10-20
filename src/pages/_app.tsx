@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import { store } from '@/store'
 import backendInstance from '@/lib/axios'
 import AxiosErrorToast from '@/components/AxiosErrorToast'
-import { NEXT_CONFIG } from '@/config'
+import { apiEndpoints, NEXT_CONFIG } from '@/config'
 import { useRouter } from 'next/router'
 
 async function initalLine() {
@@ -29,6 +29,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const [routing, setRouting] = useState(false)
 
   useEffect(() => {
+    backendInstance.get(apiEndpoints.healthCheck)
     router.events.on('routeChangeStart', () => setRouting(true))
     router.events.on('routeChangeComplete', () => setRouting(false))
     router.events.on('routeChangeError', () => router.reload())
