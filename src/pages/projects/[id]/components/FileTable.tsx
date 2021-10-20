@@ -70,7 +70,7 @@ const FileTable: React.FC<Props> = ({ project_id }) => {
     {
       Header: 'Created at',
       accessor: 'created_at',
-      Cell: ({ value }) => formatDate(value),
+      Cell: ({ value }) => formatDate(value || new Date()),
     },
     {
       Header: 'Delete',
