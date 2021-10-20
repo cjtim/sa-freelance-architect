@@ -11,7 +11,6 @@ import {
 } from '@reduxjs/toolkit'
 
 import { Furniture } from '@/pages/api/entity'
-import { NewRow } from '@/pages/api/interface/common'
 import { getBucket } from '@/lib/firebase'
 import { ref, uploadBytes } from 'firebase/storage'
 
@@ -53,7 +52,7 @@ export const fetchFurniture = createAsyncThunk(
 
 export const createFurniture = createAsyncThunk(
   'furnitures/createFurniture',
-  async ({ furniture, file }: { furniture: NewRow<Furniture>; file: File }) => {
+  async ({ furniture, file }: { furniture: Furniture; file: File }) => {
     const storage = getBucket()
     const uuid = uuidv4()
     const location = `furnitures/${uuid}-${file.name}`

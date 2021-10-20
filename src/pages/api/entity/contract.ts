@@ -5,19 +5,18 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { NewRow } from '../interface/common'
 import { Project } from '.'
 import { DefaultColumns } from './_default'
 
 @Entity()
 export class Contract extends DefaultColumns {
-  constructor(job: NewRow<Contract>) {
+  constructor(job: Partial<Contract>) {
     super()
     Object.assign(this, job)
   }
 
   @PrimaryGeneratedColumn()
-  readonly contract_id!: number
+  readonly contract_id?: number
 
   @Column()
   estimated_when!: Date

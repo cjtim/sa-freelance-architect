@@ -5,19 +5,18 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { NewRow } from '../interface/common'
 import { ProjectFurniture } from '.'
 import { DefaultColumns } from './_default'
 
 @Entity()
 export class Furniture extends DefaultColumns {
-  constructor(fur: NewRow<Furniture>) {
+  constructor(fur: Partial<Furniture>) {
     super()
     Object.assign(this, fur)
   }
 
   @PrimaryGeneratedColumn()
-  readonly furniture_id!: number
+  readonly furniture_id?: number
 
   @Column()
   furniture_name!: string

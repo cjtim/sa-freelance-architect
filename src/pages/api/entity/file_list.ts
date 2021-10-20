@@ -5,19 +5,18 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { NewRow } from '../interface/common'
 import { Project } from '.'
 import { DefaultColumns } from './_default'
 
 @Entity()
 export class FileList extends DefaultColumns {
-  constructor(job: NewRow<FileList>) {
+  constructor(job: Partial<FileList>) {
     super()
     Object.assign(this, job)
   }
 
   @PrimaryGeneratedColumn()
-  readonly file_id!: number
+  readonly file_id?: number
 
   @Column()
   name!: string

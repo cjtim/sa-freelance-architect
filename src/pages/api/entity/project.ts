@@ -25,7 +25,7 @@ export class Project extends DefaultColumns {
   }
 
   @PrimaryGeneratedColumn()
-  readonly project_id!: number
+  readonly project_id?: number
 
   @Column()
   name!: string

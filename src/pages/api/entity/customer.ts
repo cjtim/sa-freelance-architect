@@ -5,13 +5,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { NewRow } from '../interface/common'
 import { Project } from '.'
 import { DefaultColumns } from './_default'
 
 @Entity()
 export class Customer extends DefaultColumns {
-  constructor(customer: NewRow<Customer>) {
+  constructor(customer: Partial<Customer>) {
     super()
     Object.assign(this, customer)
   }

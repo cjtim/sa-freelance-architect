@@ -6,19 +6,18 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { NewRow } from '../interface/common'
 import { Receipt, Project } from '.'
 import { DefaultColumns } from './_default'
 
 @Entity()
 export class DeliverTask extends DefaultColumns {
-  constructor(job: NewRow<DeliverTask>) {
+  constructor(job: Partial<DeliverTask>) {
     super()
     Object.assign(this, job)
   }
 
   @PrimaryGeneratedColumn()
-  readonly task_id!: number
+  readonly task_id?: number
 
   @Column({ nullable: true })
   note?: string

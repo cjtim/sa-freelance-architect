@@ -1,17 +1,16 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { NewRow } from '../interface/common'
 import { Project, Furniture } from '.'
 import { DefaultColumns } from './_default'
 
 @Entity()
 export class ProjectFurniture extends DefaultColumns {
-  constructor(job: NewRow<ProjectFurniture>) {
+  constructor(job: Partial<ProjectFurniture>) {
     super()
     Object.assign(this, job)
   }
 
   @PrimaryGeneratedColumn()
-  readonly project_furniture_id!: number
+  readonly project_furniture_id?: number
 
   // FK
   @ManyToOne('Project', 'ProjectFurniture', {

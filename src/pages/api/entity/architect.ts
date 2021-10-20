@@ -5,19 +5,18 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { NewRow } from '../interface/common'
 import { Project } from '.'
 import { DefaultColumns } from './_default'
 
 @Entity()
 export class Architect extends DefaultColumns {
-  constructor(fur: NewRow<Architect>) {
+  constructor(fur: Partial<Architect>) {
     super()
     Object.assign(this, fur)
   }
 
   @PrimaryGeneratedColumn()
-  readonly architect_id!: number
+  readonly architect_id?: number
 
   @Column()
   name!: string

@@ -10,7 +10,6 @@ import {
 } from '@reduxjs/toolkit'
 
 import { Customer } from '@/pages/api/entity'
-import { NewRow } from '@/pages/api/interface/common'
 import { sortBy } from '@/utils/sort'
 
 interface CustomerState {
@@ -51,7 +50,7 @@ export const fetchCustomer = createAsyncThunk(
 
 export const createCustomer = createAsyncThunk(
   'customer/createCustomer',
-  async (project: NewRow<Customer>) => {
+  async (project: Customer) => {
     const { data } = await backendInstance.post<any>(
       apiEndpoints.customers,
       project,

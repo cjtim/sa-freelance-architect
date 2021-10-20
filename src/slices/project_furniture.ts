@@ -10,7 +10,6 @@ import {
 } from '@reduxjs/toolkit'
 
 import { Furniture, ProjectFurniture } from '@/pages/api/entity'
-import { NewRow } from '@/pages/api/interface/common'
 
 interface ProjectFurnitureState {
   projectFurnitures: ProjectFurniture[]

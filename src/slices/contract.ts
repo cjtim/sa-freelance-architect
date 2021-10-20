@@ -10,7 +10,6 @@ import {
 } from '@reduxjs/toolkit'
 
 import { Contract } from '@/pages/api/entity'
-import { NewRow } from '@/pages/api/interface/common'
 
 interface ContractState {
   contracts: Contract[]
@@ -50,8 +49,8 @@ export const fetchContractByProject = createAsyncThunk(
 
 export const upsertContract = createAsyncThunk(
   'contract/createContract',
-  async (project: NewRow<Contract>) => {
-    const { data } = await backendInstance.post<any>(
+  async (project: Contract) => {
+    const { data } = await backendInstance.post<Contract>(
       apiEndpoints.contracts,
       project,
     )

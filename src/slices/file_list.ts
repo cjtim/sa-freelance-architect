@@ -13,7 +13,6 @@ import {
 import { FileList } from '@/pages/api/entity'
 import { getBucket } from '@/lib/firebase'
 import { ref, uploadBytes } from 'firebase/storage'
-import { NewRow } from '@/pages/api/interface/common'
 
 interface FileListState {
   fileList: FileList[]
@@ -53,7 +52,7 @@ export const fetchFileListByProject = createAsyncThunk(
 
 export const createFile = createAsyncThunk(
   'fileList/createFile',
-  async ({ file, fileList }: { file: File; fileList: NewRow<FileList> }) => {
+  async ({ file, fileList }: { file: File; fileList: FileList }) => {
     const storage = getBucket()
     const uuid = uuidv4()
     const location = `projects/${fileList.project.project_id}/${uuid}-${file.name}`

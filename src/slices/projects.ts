@@ -10,7 +10,6 @@ import {
 } from '@reduxjs/toolkit'
 
 import { Project } from '@/pages/api/entity/project'
-import { NewRow } from '@/pages/api/interface/common'
 
 interface ProjectState {
   projects: Project[]
@@ -45,8 +44,8 @@ export const fetchProject = createAsyncThunk(
 
 export const createProject = createAsyncThunk(
   'projects/createProject',
-  async (project: NewRow<Project>) => {
-    const { data } = await backendInstance.post<any>(
+  async (project: Project) => {
+    const { data } = await backendInstance.post<Project>(
       apiEndpoints.projects,
       project,
     )
