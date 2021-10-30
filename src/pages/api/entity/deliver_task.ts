@@ -30,8 +30,7 @@ export class DeliverTask extends DefaultColumns {
   actual_date?: Date
 
   @Column({
-    enum: DeliveryState,
-    enumName: 'deliver_task_status_enum',
+    type: 'varchar',
     default: DeliveryState.WAIT_FOR_REVIEW,
   })
   status?: DeliveryState

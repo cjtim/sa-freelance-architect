@@ -38,8 +38,7 @@ export class Project extends DefaultColumns {
   started_when!: Date
 
   @Column({
-    enum: ProjectState,
-    enumName: 'project_status_enum',
+    type: 'varchar',
     default: ProjectState.NEW,
   })
   status?: ProjectState
