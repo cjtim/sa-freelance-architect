@@ -15,6 +15,7 @@ import {
   FileList,
   ProjectFurniture,
 } from '.'
+import { ProjectState } from '../interface/state'
 import { DefaultColumns } from './_default'
 
 @Entity()
@@ -36,8 +37,12 @@ export class Project extends DefaultColumns {
   @Column()
   started_when!: Date
 
-  @Column()
-  status!: 'NOT SIGNING' | 'DONE'
+  @Column({
+    enum: ProjectState,
+    enumName: 'project_status_enum',
+    default: ProjectState.NEW,
+  })
+  status?: ProjectState
 
   /**
    * FK

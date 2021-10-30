@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm'
 import { Receipt, Project } from '.'
+import { DeliveryState } from '../interface/state'
 import { DefaultColumns } from './_default'
 
 @Entity()
@@ -27,6 +28,13 @@ export class DeliverTask extends DefaultColumns {
 
   @Column({ nullable: true })
   actual_date?: Date
+
+  @Column({
+    enum: DeliveryState,
+    enumName: 'deliver_task_status_enum',
+    default: DeliveryState.WAIT_FOR_REVIEW,
+  })
+  status?: DeliveryState
 
   // FK - project_id
   @ManyToOne(() => Project, (project) => project.deliverTasks, {
