@@ -1,20 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import ProjectReducer from '../slices/projects'
-import CustomerReducer from '../slices/customer'
-import FurnitureReducer from '../slices/funiture'
-import FileListReducer from '../slices/file_list'
-import ContractReducer from '../slices/contract'
-import ProjectFurnitureReducer from '../slices/project_furniture'
+import projects from '../slices/projects'
+import customers from '../slices/customer'
+import furnitures from '../slices/funiture'
+import fileList from '../slices/file_list'
+import contracts from '../slices/contract'
+import projectFurnitures from '../slices/project_furniture'
+import _template from '../slices/_template'
 
 export const store = configureStore({
   reducer: {
-    projects: ProjectReducer,
-    customers: CustomerReducer,
-    furnitures: FurnitureReducer,
-    fileList: FileListReducer,
-    contracts: ContractReducer,
-    projectFurnitures: ProjectFurnitureReducer,
+    projects,
+    customers,
+    furnitures,
+    fileList,
+    contracts,
+    projectFurnitures,
+    _template,
   },
 })
 
