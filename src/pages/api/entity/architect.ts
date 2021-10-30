@@ -27,6 +27,7 @@ export class Architect extends DefaultColumns {
   @Column()
   lineUid!: string
 
+  // Relations
   @OneToMany(() => Project, (project) => project.architect, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

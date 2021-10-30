@@ -24,6 +24,7 @@ export class Customer extends DefaultColumns {
   @Column({ length: '10' })
   phone!: string
 
+  // Relation
   @OneToMany(() => Project, (project) => project.customer, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

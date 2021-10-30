@@ -30,7 +30,7 @@ export class Contract extends DefaultColumns {
   @Column({ nullable: true })
   installment?: number
 
-  // FK
+  // FK - project_id
   @OneToOne(() => Project, (project) => project.contract, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

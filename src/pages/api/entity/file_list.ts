@@ -27,7 +27,7 @@ export class FileList extends DefaultColumns {
   @Column({ nullable: true })
   notes?: string
 
-  // FK
+  // FK - project_id
   @ManyToOne(() => Project, (project) => project.fileLists, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

@@ -28,7 +28,7 @@ export class Receipt extends DefaultColumns {
   @Column({ nullable: true })
   receipt_img_url?: Date
 
-  // FK - not null
+  // FK - task_id
   @OneToMany(() => DeliverTask, (deliver) => deliver.receipts, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

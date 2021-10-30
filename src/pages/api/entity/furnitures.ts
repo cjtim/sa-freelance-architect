@@ -39,6 +39,7 @@ export class Furniture extends DefaultColumns {
   @Column()
   img!: string
 
+  // Relation
   @OneToMany(
     () => ProjectFurniture,
     (projectFurniture) => projectFurniture.furniture,

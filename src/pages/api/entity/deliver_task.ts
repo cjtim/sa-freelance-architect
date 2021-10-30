@@ -28,7 +28,7 @@ export class DeliverTask extends DefaultColumns {
   @Column({ nullable: true })
   actual_date?: Date
 
-  // FK - not null
+  // FK - project_id
   @ManyToOne(() => Project, (project) => project.deliverTasks, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -37,6 +37,7 @@ export class DeliverTask extends DefaultColumns {
   @JoinColumn({ name: 'project_id' })
   project!: Partial<Project>
 
+  // Relation
   @OneToMany('Receipt', 'DeliverTask', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

@@ -12,7 +12,7 @@ export class ProjectFurniture extends DefaultColumns {
   @PrimaryGeneratedColumn()
   readonly project_furniture_id?: number
 
-  // FK
+  // FK - project_id
   @ManyToOne('Project', 'ProjectFurniture', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -21,7 +21,7 @@ export class ProjectFurniture extends DefaultColumns {
   @JoinColumn({ name: 'project_id' })
   project!: Partial<Project>
 
-  // FK
+  // FK - furniture_id
   @ManyToOne(() => Furniture, (furniture) => furniture.projectFurniture, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

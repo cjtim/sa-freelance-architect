@@ -39,6 +39,32 @@ export class Project extends DefaultColumns {
   @Column()
   status!: 'NOT SIGNING' | 'DONE'
 
+  /**
+   * FK
+   * - customer_id
+   * - architect_id
+   */
+  // FK - customer_id
+  @ManyToOne(() => Customer, (customer) => customer.projects, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'customer_id' })
+  customer?: Partial<Customer>
+
+  // FK - architect_id
+  @ManyToOne(() => Architect, (architect) => architect.projects, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'architect_id' })
+  architect?: Partial<Architect>
+
+  /**
+   * Relations
+   */
   @OneToMany(() => FileList, (i) => i.project, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -62,22 +88,4 @@ export class Project extends DefaultColumns {
     onUpdate: 'CASCADE',
   })
   projectFurniture?: ProjectFurniture[]
-
-  // FK - not null
-  @ManyToOne(() => Customer, (customer) => customer.projects, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-    nullable: false,
-  })
-  @JoinColumn({ name: 'customer_id' })
-  customer?: Partial<Customer>
-
-  // FK - not null
-  @ManyToOne(() => Architect, (architect) => architect.projects, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-    nullable: false,
-  })
-  @JoinColumn({ name: 'architect_id' })
-  architect?: Partial<Architect>
 }
