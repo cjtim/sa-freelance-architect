@@ -17,7 +17,7 @@ import {
 import router from 'next/router'
 import React, { useRef, useState } from 'react'
 import { Column } from 'react-table'
-import { FileList } from '@API/entity'
+import { FileList } from '@/pages/api/entity'
 import { formatDate } from '@/utils/date'
 
 interface Props {

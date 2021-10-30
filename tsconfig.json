@@ -18,7 +18,6 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"],
-      "@API/*": ["./pages/api/*"]
     }
   },
   "exclude": ["node_modules"],
