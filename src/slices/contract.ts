@@ -34,7 +34,7 @@ export const fetchContracts = createAsyncThunk(
 )
 
 export const fetchContractByProject = createAsyncThunk(
-  'contract/fetchContract',
+  'contracts/fetchContract',
   async (project_id: number) => {
     const params = { project_id }
     const { data } = await backendInstance.get<Contract>(
@@ -48,7 +48,7 @@ export const fetchContractByProject = createAsyncThunk(
 )
 
 export const upsertContract = createAsyncThunk(
-  'contract/createContract',
+  'contracts/createContract',
   async (project: Contract) => {
     const { data } = await backendInstance.post<Contract>(
       apiEndpoints.contracts,

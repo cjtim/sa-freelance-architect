@@ -15,7 +15,7 @@ import {
   MenuGroup,
   IconButton,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import NextLink from 'next/link'
 import { BsHouseFill } from 'react-icons/bs'
 
@@ -27,8 +27,8 @@ interface Profile {
 }
 
 export default function NavBar(): JSX.Element {
-  const [show, setShow] = React.useState(false)
-  const [profile, setProfile] = React.useState<Profile | undefined>(undefined)
+  const [show, setShow] = useState(false)
+  const [profile, setProfile] = useState<Profile | undefined>(undefined)
   const toggleMenu = () => setShow(!show)
   const { toggleColorMode, colorMode } = useColorMode()
 
@@ -64,8 +64,12 @@ export default function NavBar(): JSX.Element {
             />
           </Link>
 
-          <Box display={{ base: 'block', md: 'none' }} onClick={toggleMenu}>
-            <HamburgerIcon />
+          <Box display={{ base: 'block', md: 'none' }}>
+            <IconButton
+              aria-label="Search database"
+              icon={<HamburgerIcon />}
+              onClick={() => toggleMenu()}
+            />
           </Box>
 
           <Box
@@ -122,6 +126,6 @@ export default function NavBar(): JSX.Element {
         <Divider />
       </nav>
     ),
-    [profile, colorMode],
+    [profile, colorMode, show],
   )
 }

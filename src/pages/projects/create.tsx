@@ -42,7 +42,6 @@ const ProjectCreate = () => {
                 name: '',
                 estimated_when: new Date(),
                 started_when: new Date(),
-                status: 'NOT SIGNING',
               } as Project
             }
             validationSchema={Yup.object().shape({
