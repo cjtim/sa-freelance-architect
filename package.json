@@ -38,7 +38,7 @@
     "@line/liff": "2.14.0",
     "@reduxjs/toolkit": "1.6.1",
     "@svgr/webpack": "5.5.0",
-    "axios": "0.21.1",
+    "axios": "0.21.2",
     "express": "4.17.1",
     "firebase": "9.0.2",
     "formik": "2.2.9",
