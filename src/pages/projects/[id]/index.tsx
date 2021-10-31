@@ -7,8 +7,10 @@ import { Container, Heading, Divider, Button } from '@chakra-ui/react'
 import { fetchProject } from '@/slices/projects'
 import { fetchFileListByProject } from '@/slices/file_list'
 import { fetchContractByProject } from '@/slices/contract'
-import FileTable from './components/FileTable'
-import ContractTable from './components/ContractTable'
+import { fetchDeliverTaskByProject } from '@/slices/deliver_task'
+import FileTable from '../../../components/projects/FileTable'
+import ContractTable from '../../../components/projects/ContractTable'
+import DeliverTaskTable from '../../../components/projects/DeliverTaskTable'
 
 const ProjectDetails = () => {
   const router = useRouter()
@@ -25,6 +27,7 @@ const ProjectDetails = () => {
       dispatch(fetchProject(idInt))
       dispatch(fetchFileListByProject(idInt))
       dispatch(fetchContractByProject(idInt))
+      dispatch(fetchDeliverTaskByProject(idInt))
     }
   }, [id])
 
@@ -46,6 +49,7 @@ const ProjectDetails = () => {
           View Project funitures
         </Button>
         <Divider />
+        <DeliverTaskTable project_id={Number(id)} />
       </Container>
     </PageLayout>
   )

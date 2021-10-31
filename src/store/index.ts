@@ -6,6 +6,7 @@ import furnitures from '../slices/funiture'
 import fileList from '../slices/file_list'
 import contracts from '../slices/contract'
 import projectFurnitures from '../slices/project_furniture'
+import deliverTasks from '../slices/deliver_task'
 import _template from '../slices/_template'
 
 export const store = configureStore({
@@ -17,6 +18,7 @@ export const store = configureStore({
     contracts,
     projectFurnitures,
     _template,
+    deliverTasks,
   },
 })
 
