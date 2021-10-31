@@ -1,8 +1,6 @@
 /// <reference types="next" />
 /// <reference types="next/types/global" />
-declare module '*.svg' {
-  import { ReactElement, SVGProps } from 'react'
+/// <reference types="next/image-types/global" />
 
-  const content: (props: SVGProps<SVGElement>) => ReactElement
-  export default content
-}
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/basic-features/typescript for more information.
