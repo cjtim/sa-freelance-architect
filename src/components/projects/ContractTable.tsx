@@ -28,7 +28,9 @@ const ContractTable: React.FC<Props> = ({ project_id }) => {
           Estimated time: {formatDate(contractByProject?.estimated_when)}
         </Text>
         <Text>Installment: {contractByProject?.installment}</Text>
-        <Text>Updated at: {contractByProject?.updated_at}</Text>
+        <Text>
+          Updated at: {formatDate(contractByProject?.updated_at || new Date())}
+        </Text>
       </Stack>
     </>
   )

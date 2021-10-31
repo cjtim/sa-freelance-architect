@@ -37,9 +37,9 @@ const ProjectDetails = () => {
       <Container maxW="container.xl">
         <Heading>{project.name}</Heading>
         <Divider />
-        <FileTable project_id={Number(id)} />
-        <Divider />
         <ContractTable project_id={Number(id)} />
+        <Divider />
+        <FileTable project_id={Number(id)} />
         <Divider />
         <Button
           my={4}
