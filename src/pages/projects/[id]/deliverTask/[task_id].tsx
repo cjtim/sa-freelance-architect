@@ -19,12 +19,15 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  useClipboard,
+  Stack,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { Column } from 'react-table'
 import { AddIcon } from '@chakra-ui/icons'
 import { createReceiptByTaskId, fetchReceiptByTaskId } from '@/slices/receipts'
+import { hostname } from '@/utils/hostname'
 
 const columns: Column<Partial<Receipt>>[] = [
   {
@@ -51,20 +54,23 @@ const DeliverTaskEditPage = () => {
   const { id, task_id } = router.query
   const [file, setFile] = useState<File>()
   const noteRef = useRef<any>(null)
+  const { hasCopied, onCopy } = useClipboard(
+    `${hostname}/customer/deliverTask/${task_id}`,
+  )
 
   const onUpload = async () => {
-    if (file) {
+    if (file && noteRef?.current.value) {
       await dispatch(
         createReceiptByTaskId({
           receipt: {
-            amount: noteRef?.current.value,
+            amount: noteRef?.current.value || 0,
             deliverTask: { task_id: Number(task_id) },
             receipt_date: new Date(),
           },
           file,
         }),
       )
-      router.reload()
+      dispatch(fetchReceiptByTaskId(Number(task_id)))
     }
   }
 
@@ -96,8 +102,13 @@ const DeliverTaskEditPage = () => {
         )}
       </Container>
       <Container maxW="container.xl" pt="12">
-        <Flex>
-          <Heading>Receipts list</Heading>
+        <Stack>
+          <Flex>
+            <Heading>Receipts list</Heading>
+            <Button onClick={onCopy} ml={2}>
+              {hasCopied ? 'Copied' : 'คัดลอกลิงค์ สำหรับลูกค้าส่งใบเสร็จ'}
+            </Button>
+          </Flex>
           <Flex py="2">
             <Input
               type="file"
@@ -122,7 +133,7 @@ const DeliverTaskEditPage = () => {
               Upload
             </Button>
           </Flex>
-        </Flex>
+        </Stack>
         <BaseTable data={receipts || []} columns={columns} />
       </Container>
     </PageLayout>

@@ -53,7 +53,7 @@ const DeliverTaskTable: React.FC<Props> = ({ project_id }) => {
           size="sm"
           onClick={() =>
             router.push(
-              `/projects/${project_id}/deliverTasks/${row.original.task_id}`,
+              `/projects/${project_id}/deliverTask/${row.original.task_id}`,
             )
           }
         >

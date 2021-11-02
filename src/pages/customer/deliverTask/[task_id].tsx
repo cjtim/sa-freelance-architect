@@ -54,18 +54,18 @@ const DeliverTaskEditPage = () => {
   const noteRef = useRef<any>(null)
 
   const onUpload = async () => {
-    if (file) {
+    if (file && noteRef?.current.value) {
       await dispatch(
         createReceiptByTaskId({
           receipt: {
-            amount: noteRef?.current.value,
+            amount: noteRef?.current.value || 0,
             deliverTask: { task_id: Number(task_id) },
             receipt_date: new Date(),
           },
           file,
         }),
       )
-      router.reload()
+      dispatch(fetchReceiptByTaskId(Number(task_id)))
     }
   }
 
@@ -78,7 +78,7 @@ const DeliverTaskEditPage = () => {
       }),
     )
     if (action.meta.requestStatus === 'fulfilled') {
-      router.push(`/projects/${Number(id)}`)
+      dispatch(fetchReceiptByTaskId(Number(task_id)))
     }
   }
 
