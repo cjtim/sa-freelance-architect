@@ -14,6 +14,7 @@ const api = Router()
 // Project
 api.get(apiEndpoints.projects, ProjectController.get)
 api.post(apiEndpoints.projects, ProjectController.create)
+api.put(apiEndpoints.projects, ProjectController.update)
 
 // Customer
 api.get(apiEndpoints.customers, CustomerController.get)

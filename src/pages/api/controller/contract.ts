@@ -8,13 +8,18 @@ export class ContractController {
       const { project_id } = req.query
       const contractRepo = getRepository<Contract>('Contract')
       if (project_id) {
-        const contracts = await contractRepo.query(`
-          select * from contract c 
-          where c.project_id = ${project_id}
-        `)
-        if (contracts?.length > 0) {
-          return res.json(contracts[0] || {})
-        }
+        const contract = await contractRepo.findOne({
+          where: { project: { project_id } },
+          relations: ['project'],
+        })
+        return res.json(contract)
+        // .query(`
+        //   select * from contract c
+        //   INNER JOIN project p ON c.project_id = p.project_id where c.project_id = ${project_id}
+        // `)
+        // if (contracts[0]) {
+        //   return res.json(contracts[0] || {})
+        // }
       }
       const customers = await contractRepo.find()
 

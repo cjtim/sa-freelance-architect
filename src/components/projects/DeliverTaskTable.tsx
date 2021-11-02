@@ -79,7 +79,7 @@ const DeliverTaskTable: React.FC<Props> = ({ project_id }) => {
   return (
     <>
       <Flex align="center" py={4}>
-        <Heading size="md">Deliver Task</Heading>
+        <Heading size="md">Deliver Task (งวดการส่งงาน)</Heading>
         <Button
           marginLeft="auto"
           colorScheme="green"

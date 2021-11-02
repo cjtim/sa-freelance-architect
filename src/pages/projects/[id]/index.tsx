@@ -11,6 +11,7 @@ import {
   Text,
   Icon,
   useClipboard,
+  Flex,
 } from '@chakra-ui/react'
 import { fetchProject } from '@/slices/projects'
 import { fetchFileListByProject } from '@/slices/file_list'
@@ -48,7 +49,16 @@ const ProjectDetails = () => {
     <PageLayout windowTitle={`Project | ${project?.name || id}`}>
       <NavBar />
       <Container maxW="container.xl">
-        <Heading>{project.name}</Heading>
+        <Flex>
+          <Heading>{project.name}</Heading>
+          <Button
+            marginLeft="auto"
+            colorScheme="green"
+            onClick={() => router.push(`/projects/${id}/update`)}
+          >
+            แก้ไขโปรเจค
+          </Button>
+        </Flex>
         <Text>State: {project?.status}</Text>
         <Divider />
 
