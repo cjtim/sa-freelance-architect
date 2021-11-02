@@ -19,6 +19,7 @@ import { DeliveryState } from '@/pages/api/interface/state'
 interface Props {
   onSubmit: (values: DeliverTask) => void
   initialValues?: DeliverTask
+  isDisable?: boolean
 }
 
 const DeliverTaskForm: React.FC<Props> = ({
@@ -28,9 +29,10 @@ const DeliverTaskForm: React.FC<Props> = ({
     due_date: new Date(),
     status: DeliveryState.WAIT_FOR_REVIEW,
   } as DeliverTask,
+  isDisable = false,
 }) => (
   <Container maxW="container.xl">
-    <Heading>Deliver Task create</Heading>
+    <Heading>ข้อมูลการส่งงาน</Heading>
     <Formik
       initialValues={initialValues}
       validationSchema={Yup.object().shape({
@@ -55,7 +57,12 @@ const DeliverTaskForm: React.FC<Props> = ({
               {({ field }: { field: FieldMetaProps<any> }) => (
                 <FormControl isInvalid={(errors.note && touched.note) || false}>
                   <FormLabel htmlFor="note">note</FormLabel>
-                  <Input {...field} id="note" placeholder="note" />
+                  <Input
+                    {...field}
+                    id="note"
+                    placeholder="note"
+                    isDisabled={isDisable}
+                  />
                   <FormErrorMessage>{errors.note}</FormErrorMessage>
                 </FormControl>
               )}
@@ -70,6 +77,7 @@ const DeliverTaskForm: React.FC<Props> = ({
                 // label="DatePicker Label"
                 formatStyle="large"
                 required
+                disabled={isDisable}
               />
               <FormErrorMessage>{errors.due_date}</FormErrorMessage>
             </FormControl>
@@ -85,6 +93,7 @@ const DeliverTaskForm: React.FC<Props> = ({
                 onChange={(value) => setFieldValue('actual_date', value)}
                 // label="DatePicker Label"
                 formatStyle="large"
+                disabled={isDisable}
               />
               <FormErrorMessage>{errors.actual_date}</FormErrorMessage>
             </FormControl>
@@ -95,7 +104,12 @@ const DeliverTaskForm: React.FC<Props> = ({
                   isInvalid={(errors.status && touched.status) || false}
                 >
                   <FormLabel htmlFor="status">Status</FormLabel>
-                  <Select {...field} id="status" placeholder="Select option">
+                  <Select
+                    {...field}
+                    id="status"
+                    placeholder="Select option"
+                    isDisabled={isDisable}
+                  >
                     {Object.values(DeliveryState).map((state) => (
                       <option value={state} key={state}>
                         {state}
@@ -112,6 +126,7 @@ const DeliverTaskForm: React.FC<Props> = ({
               colorScheme="teal"
               isLoading={isSubmitting}
               type="submit"
+              hidden={isDisable}
             >
               Submit
             </Button>

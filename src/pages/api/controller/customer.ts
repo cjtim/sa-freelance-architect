@@ -8,13 +8,21 @@ export default class CustomerController {
       const { id }: { id: string } = req.body
       const customerRepo = getRepository<Customer>('Customer')
       if (id) {
-        const customers = await customerRepo.find({
-          where: { customer_id: Number(id) },
-          relations: ['projects'],
-        })
+        const customers = await customerRepo.query(`select * from customer c
+        INNER JOIN project p ON c.customer_id = p.customer_id WHERE c.customer_id = ${Number(
+          id,
+        )}`)
+        // .find({
+        //   where: { customer_id: Number(id) },
+        //   relations: ['projects'],
+        // })
         return res.json(customers)
       }
+
       const customers = await customerRepo.find({ relations: ['projects'] })
+      /**
+       * select *, (select count(*) from project pj where pj.customer_id = 2) as count from customer c INNER JOIN project p ON c.customer_id = p.customer_id
+       */
       return res.json(customers)
     } catch (e) {
       next(e)

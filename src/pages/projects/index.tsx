@@ -35,6 +35,10 @@ const ProjectList: React.FC = () => {
       Cell: ({ value }) => value?.name,
     },
     {
+      Header: 'State',
+      accessor: 'status',
+    },
+    {
       Header: 'View',
       accessor: undefined,
       Cell: ({ row }: any) => (

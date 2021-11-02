@@ -3,7 +3,7 @@ import PageLayout from '@/components/PageLayout'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { Container, Heading, Divider, Button } from '@chakra-ui/react'
+import { Container, Heading, Divider, Button, Text } from '@chakra-ui/react'
 import { fetchProject } from '@/slices/projects'
 import { fetchFileListByProject } from '@/slices/file_list'
 import { fetchContractByProject } from '@/slices/contract'
@@ -36,6 +36,7 @@ const ProjectDetails = () => {
       <NavBar />
       <Container maxW="container.xl">
         <Heading>{project.name}</Heading>
+        <Text>State: {project?.status}</Text>
         <Divider />
         <ContractTable project_id={Number(id)} />
         <Divider />
