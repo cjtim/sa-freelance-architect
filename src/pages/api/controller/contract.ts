@@ -12,7 +12,7 @@ export class ContractController {
           where: { project: { project_id } },
           relations: ['project'],
         })
-        return res.json(contract)
+        return res.json(contract || {})
         // .query(`
         //   select * from contract c
         //   INNER JOIN project p ON c.project_id = p.project_id where c.project_id = ${project_id}
