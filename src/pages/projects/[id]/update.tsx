@@ -26,14 +26,14 @@ const UpdateProject: React.FC = () => {
     }
   }
   useEffect(() => {
-    dispatch(fetchCustomers())
     dispatch(fetchProject(Number(id)))
+    dispatch(fetchCustomers())
   }, [])
 
   return (
     <PageLayout windowTitle="update project">
       <Container maxW="container.xl">
-        {!(projectLoading || customerLoading) && (
+        {!projectLoading && !customerLoading && project?.project_id && (
           <ProjectForm
             customers={customers}
             onSubmit={handleSubmit}

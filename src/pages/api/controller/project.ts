@@ -48,7 +48,7 @@ export default class ProjectController {
     try {
       const body = req.body as Project
       const repo = getRepository<Project>('Project')
-      const result = await repo.update(body, body)
+      const result = await repo.update(body.project_id!, body)
       return res.json(result)
     } catch (e) {
       next(e)
