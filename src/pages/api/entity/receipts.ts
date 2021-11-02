@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
@@ -26,10 +27,10 @@ export class Receipt extends DefaultColumns {
 
   // TODO: nullable is just in case
   @Column({ nullable: true })
-  receipt_img_url?: Date
+  receipt_img_url?: string
 
   // FK - task_id
-  @OneToMany(() => DeliverTask, (deliver) => deliver.receipts, {
+  @ManyToOne(() => DeliverTask, (deliver) => deliver.receipts, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: false,

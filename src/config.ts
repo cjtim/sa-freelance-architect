@@ -15,4 +15,5 @@ export const apiEndpoints = {
   contracts: '/api/contracts',
   projectFurnitures: '/api/projectFurnitures',
   deliverTasks: '/api/deliverTasks',
+  receipts: '/api/receipts',
 }

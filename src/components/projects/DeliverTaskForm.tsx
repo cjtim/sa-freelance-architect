@@ -97,7 +97,9 @@ const DeliverTaskForm: React.FC<Props> = ({
                   <FormLabel htmlFor="status">Status</FormLabel>
                   <Select {...field} id="status" placeholder="Select option">
                     {Object.values(DeliveryState).map((state) => (
-                      <option value={state}>{state}</option>
+                      <option value={state} key={state}>
+                        {state}
+                      </option>
                     ))}
                   </Select>
                   <FormErrorMessage>{errors.status}</FormErrorMessage>

@@ -7,6 +7,7 @@ import FileListController from '../controller/file_list'
 import { ContractController } from '../controller/contract'
 import { ProjectFurnitureController } from '../controller/project_furniture'
 import DeliverTaskController from '../controller/deliver_task'
+import { ReceiptController } from '../controller/receipts'
 
 const api = Router()
 
@@ -40,5 +41,9 @@ api.post(apiEndpoints.projectFurnitures, ProjectFurnitureController.upsert)
 api.get(apiEndpoints.deliverTasks, DeliverTaskController.get)
 api.post(apiEndpoints.deliverTasks, DeliverTaskController.create)
 api.delete(apiEndpoints.deliverTasks, DeliverTaskController.delete)
+
+// Receipts
+api.get(apiEndpoints.receipts, ReceiptController.get)
+api.post(apiEndpoints.receipts, ReceiptController.create)
 
 export { api }

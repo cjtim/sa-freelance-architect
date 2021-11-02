@@ -65,7 +65,7 @@ export const projectFurnitureSlice = createSlice({
       }>,
     ) => {
       const { furniture_ids, project_id, furnitures } = action.payload
-      const projectFurnitureNew: any[] = furniture_ids
+      const projectFurnitureNew = furniture_ids
         .map(
           (i) =>
             ({
