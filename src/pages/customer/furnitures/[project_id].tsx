@@ -11,17 +11,17 @@ import { Container } from '@chakra-ui/react'
 const ProjectFurniturePage = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const { id } = router.query
+  const { project_id } = router.query
 
   useEffect(() => {
-    dispatch(fetchProjectFurnitures(Number(id)))
+    dispatch(fetchProjectFurnitures(Number(project_id)))
     dispatch(fetchFurnitures())
-  }, [id])
+  }, [project_id])
 
   return (
     <PageLayout windowTitle="Contract">
       <Container maxW="container.xl">
-        <ProjectFurnitureForm project_id={Number(id)} />
+        <ProjectFurnitureForm project_id={Number(project_id)} />
       </Container>
     </PageLayout>
   )
