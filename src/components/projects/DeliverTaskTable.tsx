@@ -104,7 +104,7 @@ const DeliverTaskTable: React.FC<Props> = ({ project_id }) => {
             router.push(`/projects/${project_id}/deliverTask/create`)
           }
         >
-          Create
+          สร้างงวดใหม่
         </Button>
       </Flex>
       <BaseTable columns={columns} data={deliverTasks || []} />

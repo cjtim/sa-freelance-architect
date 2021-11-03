@@ -96,7 +96,6 @@ const ProjectDetails = () => {
             {contractByProject?.installment}
           </Text>
         </SimpleGrid>
-        <Divider />
 
         <Icon as={GiSofa} fontSize="3xl" mx="2" />
         <Button
@@ -104,7 +103,7 @@ const ProjectDetails = () => {
           colorScheme="blue"
           onClick={() => router.push(`/projects/${id}/furnitures`)}
         >
-          View Project funitures
+          เฟอร์นิเจอร์ของโปรเจ็ค
         </Button>
         <Button onClick={onCopy} ml={2}>
           <CopyIcon />
@@ -112,13 +111,10 @@ const ProjectDetails = () => {
         </Button>
         <Divider />
 
-        {/* <ContractTable project_id={Number(id)} />
-        <Divider /> */}
-
-        <FileTable project_id={Number(id)} />
+        <DeliverTaskTable project_id={Number(id)} />
         <Divider />
 
-        <DeliverTaskTable project_id={Number(id)} />
+        <FileTable project_id={Number(id)} />
       </Container>
     </PageLayout>
   )
