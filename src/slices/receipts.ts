@@ -1,6 +1,13 @@
 import backendInstance from '@/lib/axios'
 import { apiEndpoints } from '@/config'
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+  createAsyncThunk,
+  createSlice,
+  isFulfilled,
+  isPending,
+  isRejected,
+  PayloadAction,
+} from '@reduxjs/toolkit'
 import { Receipt } from '@/pages/api/entity'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -64,6 +71,15 @@ export const receiptSlice = createSlice({
           state.receipts = action.payload
         },
       )
+      .addMatcher(isPending(), (state) => {
+        state.loading = true
+      })
+      .addMatcher(isFulfilled(), (state) => {
+        state.loading = false
+      })
+      .addMatcher(isRejected(), (state) => {
+        state.loading = false
+      })
   },
 })
 

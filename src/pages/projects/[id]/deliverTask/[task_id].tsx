@@ -75,12 +75,15 @@ const DeliverTaskEditPage = () => {
     }
   }
 
-  const onSubmit = async (values: DeliverTask) => {
+  const onSubmit = async (values: DeliverTask, file?: File) => {
     const action = await dispatch(
       upsertDeliverTaskByProject({
-        ...values,
-        task_id: Number(task_id),
-        project: { project_id: Number(id) },
+        deliverTask: {
+          ...values,
+          task_id: Number(task_id),
+          project: { project_id: Number(id) },
+        },
+        file,
       }),
     )
     if (action.meta.requestStatus === 'fulfilled') {

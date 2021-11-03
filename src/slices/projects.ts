@@ -10,6 +10,7 @@ import {
 } from '@reduxjs/toolkit'
 
 import { Project } from '@/pages/api/entity/project'
+import { sortBy } from '@/utils/sort'
 
 interface ProjectState {
   projects: Project[]
@@ -73,7 +74,7 @@ export const projectsSlice = createSlice({
       .addCase(
         fetchProjects.fulfilled.type,
         (state, action: PayloadAction<Project[]>) => {
-          state.projects = action.payload
+          state.projects = sortBy(action.payload, 'created_at')
         },
       )
       .addCase(

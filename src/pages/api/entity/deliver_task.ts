@@ -23,6 +23,9 @@ export class DeliverTask extends DefaultColumns {
   @Column({ nullable: true })
   note?: string
 
+  @Column({ nullable: true })
+  file_url?: string
+
   @Column()
   due_date!: Date
 

@@ -1,6 +1,7 @@
 import { Customer, Project } from '@/pages/api/entity'
 import {
   Button,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -13,6 +14,7 @@ import React from 'react'
 import * as Yup from 'yup'
 import { DatePicker } from 'react-rainbow-components'
 import { ProjectState } from '@/pages/api/interface/state'
+import router from 'next/router'
 
 interface Props {
   onSubmit: (values: Project) => Promise<void>
@@ -143,14 +145,24 @@ const ProjectForm: React.FC<Props> = ({
               </FormControl>
             )}
           </Field>
-          <Button
-            mt={4}
-            colorScheme="teal"
-            isLoading={isSubmitting}
-            type="submit"
-          >
-            Submit
-          </Button>
+          <Flex>
+            <Button
+              mt={4}
+              mr={4}
+              colorScheme="red"
+              onClick={() => router.back()}
+            >
+              Cancel
+            </Button>
+            <Button
+              mt={4}
+              colorScheme="teal"
+              isLoading={isSubmitting}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Flex>
         </Stack>
       </Form>
     )}

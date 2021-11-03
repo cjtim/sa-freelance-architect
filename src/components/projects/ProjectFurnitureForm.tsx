@@ -14,6 +14,7 @@ import {
   Image,
   Link,
   Button,
+  Heading,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import React, { useState, useRef } from 'react'
@@ -132,16 +133,19 @@ const ProjectFurnitureForm: React.FC<Props> = ({ project_id }) => {
       >
         Update
       </Button>
-      <Text>
-        Total selected:{' '}
-        {projectFurnitures
-          ?.map((pjfur) => pjfur.furniture)
-          .reduce(
-            (prev, current) => prev + (current?.price_per_unit || 0),
-            0,
-          )}{' '}
-        Bath
-      </Text>
+      <Flex py="4">
+        <Heading size="md">Total selected:</Heading>
+        <Text>
+          {' '}
+          {projectFurnitures
+            ?.map((pjfur) => pjfur.furniture)
+            .reduce(
+              (prev, current) => prev + (current?.price_per_unit || 0),
+              0,
+            )}{' '}
+          ฿Bath
+        </Text>
+      </Flex>
       <BaseTable
         data={projectFurnitures?.map((pjfur) => pjfur.furniture)}
         columns={columns}

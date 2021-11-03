@@ -12,6 +12,7 @@ import {
   Heading,
   Input,
   Stack,
+  Flex,
 } from '@chakra-ui/react'
 import { Field, FieldMetaProps, Form, Formik, FormikProps } from 'formik'
 import router from 'next/router'
@@ -38,7 +39,7 @@ const FurnitureCreate = () => {
           validationSchema={Yup.object().shape({
             furniture_name: Yup.string()
               .min(2, 'Too Short!')
-              .max(50, 'Too Long!')
+              .max(200, 'Too Long!')
               .required('Required'),
             height: Yup.number().required(),
             length: Yup.number().required(),
@@ -172,14 +173,25 @@ const FurnitureCreate = () => {
                   <FormErrorMessage>{errors.img}</FormErrorMessage>
                 </FormControl>
 
-                <Button
-                  mt={4}
-                  colorScheme="teal"
-                  isLoading={isSubmitting || loading}
-                  type="submit"
-                >
-                  Submit
-                </Button>
+                <Flex>
+                  <Button
+                    mt={4}
+                    mr={4}
+                    colorScheme="red"
+                    onClick={() => router.back()}
+                  >
+                    Cancel
+                  </Button>
+
+                  <Button
+                    mt={4}
+                    colorScheme="teal"
+                    isLoading={isSubmitting || loading}
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
+                </Flex>
               </Stack>
             </Form>
           )}
