@@ -12,11 +12,14 @@ const DeliverTaskCreatePage = () => {
   const router = useRouter()
   const { id } = router.query
 
-  const onSubmit = async (values: DeliverTask) => {
+  const onSubmit = async (values: DeliverTask, file?: File) => {
     const action = await dispatch(
       upsertDeliverTaskByProject({
-        ...values,
-        project: { project_id: Number(id) },
+        deliverTask: {
+          ...values,
+          project: { project_id: Number(id) },
+        },
+        file,
       }),
     )
     if (action.meta.requestStatus === 'fulfilled') {

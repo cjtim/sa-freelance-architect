@@ -10,6 +10,10 @@ import {
 } from '@reduxjs/toolkit'
 import { DeliverTask } from '@/pages/api/entity'
 import { sortBy } from '@/utils/sort'
+import { v4 as uuidv4 } from 'uuid'
+
+import { getBucket } from '@/lib/firebase'
+import { ref, uploadBytes } from 'firebase/storage'
 
 export const fetchDeliverTaskByProject = createAsyncThunk(
   'deliverTasks/fetchDeliverTaskByProject',
@@ -35,10 +39,18 @@ export const fetchDeliverTaskById = createAsyncThunk(
 
 export const upsertDeliverTaskByProject = createAsyncThunk(
   'deliverTasks/upsertDeliverTaskByProject',
-  async (deliverTask: DeliverTask) => {
+  async ({ deliverTask, file }: { deliverTask: DeliverTask; file?: File }) => {
+    let location = ''
+    if (file) {
+      const storage = getBucket()
+      const uuid = uuidv4()
+      location = `deliverTask/${deliverTask.task_id}/files/${uuid}-${file.name}`
+      await uploadBytes(ref(storage, location), file)
+    }
+
     const { data } = await backendInstance.post<DeliverTask>(
       apiEndpoints.deliverTasks,
-      deliverTask,
+      { deliverTask, ref: file ? location : '' },
     )
     return data
   },
