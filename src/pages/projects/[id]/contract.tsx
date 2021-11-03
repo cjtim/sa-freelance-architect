@@ -15,7 +15,6 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { Field, FieldMetaProps, Form, Formik, FormikProps } from 'formik'
-import { DatePicker } from 'react-rainbow-components'
 
 const ContractByProjectPage: React.FC = () => {
   const router = useRouter()
@@ -41,8 +40,6 @@ const ContractByProjectPage: React.FC = () => {
             initialValues={contractByProject}
             validationSchema={Yup.object().shape({
               compensation: Yup.number().required(),
-              started_when: Yup.date().required(),
-              estimated_when: Yup.date().required(),
               installment: Yup.number().required(),
             })}
             onSubmit={async (values, actions) => {
@@ -60,8 +57,6 @@ const ContractByProjectPage: React.FC = () => {
               errors,
               touched,
               isSubmitting,
-              values,
-              setFieldValue,
             }: FormikProps<Partial<Contract>>) => (
               <Form>
                 <Stack spacing="2">
@@ -86,43 +81,6 @@ const ContractByProjectPage: React.FC = () => {
                       </FormControl>
                     )}
                   </Field>
-
-                  <FormControl
-                    isInvalid={
-                      (errors.estimated_when && touched.estimated_when) || false
-                    }
-                  >
-                    <FormLabel htmlFor="estimated_when">
-                      estimated_when
-                    </FormLabel>
-                    <DatePicker
-                      id="estimated_when"
-                      value={values.estimated_when}
-                      onChange={(value) =>
-                        setFieldValue('estimated_when', value)
-                      }
-                      // label="DatePicker Label"
-                      formatStyle="large"
-                    />
-                    <FormErrorMessage>{errors.estimated_when}</FormErrorMessage>
-                  </FormControl>
-
-                  {/* Started when */}
-                  <FormControl
-                    isInvalid={
-                      (errors.started_when && touched.started_when) || false
-                    }
-                  >
-                    <FormLabel htmlFor="started_when">started_when</FormLabel>
-                    <DatePicker
-                      id="started_when"
-                      value={values.started_when}
-                      onChange={(value) => setFieldValue('started_when', value)}
-                      // label="DatePicker Label"
-                      formatStyle="large"
-                    />
-                    <FormErrorMessage>{errors.started_when}</FormErrorMessage>
-                  </FormControl>
 
                   <Field name="installment">
                     {({ field }: { field: FieldMetaProps<any> }) => (

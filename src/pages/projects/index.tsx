@@ -34,6 +34,23 @@ const ProjectList: React.FC = () => {
       accessor: 'customer',
       Cell: ({ value }) => value?.name,
     },
+    {
+      Header: 'State',
+      accessor: 'status',
+    },
+    {
+      Header: 'View',
+      accessor: undefined,
+      Cell: ({ row }: any) => (
+        <Button
+          colorScheme="blue"
+          size="sm"
+          onClick={() => router.push(`/projects/${row.original.project_id}`)}
+        >
+          View
+        </Button>
+      ),
+    },
   ]
 
   return (

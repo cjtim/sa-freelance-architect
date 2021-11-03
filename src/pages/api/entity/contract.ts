@@ -18,14 +18,14 @@ export class Contract extends DefaultColumns {
   @PrimaryGeneratedColumn()
   readonly contract_id?: number
 
-  @Column()
-  estimated_when!: Date
+  // @Column()
+  // estimated_when!: Date
 
   @Column()
   compensation!: number
 
-  @Column()
-  started_when!: Date
+  // @Column()
+  // started_when!: Date
 
   @Column({ nullable: true })
   installment?: number

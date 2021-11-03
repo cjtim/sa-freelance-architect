@@ -43,4 +43,15 @@ export default class ProjectController {
       next(e)
     }
   }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const body = req.body as Project
+      const repo = getRepository<Project>('Project')
+      const result = await repo.update(body.project_id!, body)
+      return res.json(result)
+    } catch (e) {
+      next(e)
+    }
+  }
 }

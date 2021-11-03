@@ -53,6 +53,17 @@ export const createProject = createAsyncThunk(
   },
 )
 
+export const updateProject = createAsyncThunk(
+  'projects/updateProject',
+  async (project: Project) => {
+    const { data } = await backendInstance.put<Project>(
+      apiEndpoints.projects,
+      project,
+    )
+    return data
+  },
+)
+
 export const projectsSlice = createSlice({
   name: 'projects',
   initialState,
