@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import {
   Button,
   Container,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -75,14 +76,25 @@ const CustomerCreate = () => {
                     </FormControl>
                   )}
                 </Field>
-                <Button
-                  mt={4}
-                  colorScheme="teal"
-                  isLoading={isSubmitting || loading}
-                  type="submit"
-                >
-                  Submit
-                </Button>
+                <Flex>
+                  <Button
+                    mt={4}
+                    mr={4}
+                    colorScheme="red"
+                    onClick={() => router.back()}
+                  >
+                    Cancel
+                  </Button>
+
+                  <Button
+                    mt={4}
+                    colorScheme="teal"
+                    isLoading={isSubmitting || loading}
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
+                </Flex>
               </Form>
             )}
           </Formik>

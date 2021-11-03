@@ -12,6 +12,7 @@ import {
   Heading,
   Input,
   Stack,
+  Flex,
 } from '@chakra-ui/react'
 import { Field, FieldMetaProps, Form, Formik, FormikProps } from 'formik'
 import router from 'next/router'
@@ -172,14 +173,25 @@ const FurnitureCreate = () => {
                   <FormErrorMessage>{errors.img}</FormErrorMessage>
                 </FormControl>
 
-                <Button
-                  mt={4}
-                  colorScheme="teal"
-                  isLoading={isSubmitting || loading}
-                  type="submit"
-                >
-                  Submit
-                </Button>
+                <Flex>
+                  <Button
+                    mt={4}
+                    mr={4}
+                    colorScheme="red"
+                    onClick={() => router.back()}
+                  >
+                    Cancel
+                  </Button>
+
+                  <Button
+                    mt={4}
+                    colorScheme="teal"
+                    isLoading={isSubmitting || loading}
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
+                </Flex>
               </Stack>
             </Form>
           )}

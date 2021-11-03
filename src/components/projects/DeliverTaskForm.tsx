@@ -2,6 +2,7 @@ import { DeliverTask } from '@/pages/api/entity'
 import {
   Button,
   Container,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -15,6 +16,7 @@ import React from 'react'
 import * as Yup from 'yup'
 import { DatePicker } from 'react-rainbow-components'
 import { DeliveryState } from '@/pages/api/interface/state'
+import router from 'next/router'
 
 interface Props {
   onSubmit: (values: DeliverTask) => void
@@ -121,15 +123,25 @@ const DeliverTaskForm: React.FC<Props> = ({
               )}
             </Field>
 
-            <Button
-              mt={4}
-              colorScheme="teal"
-              isLoading={isSubmitting}
-              type="submit"
-              hidden={isDisable}
-            >
-              Submit
-            </Button>
+            <Flex>
+              <Button
+                mt={4}
+                mr={4}
+                colorScheme="red"
+                onClick={() => router.back()}
+              >
+                Cancel
+              </Button>
+              <Button
+                mt={4}
+                colorScheme="teal"
+                isLoading={isSubmitting}
+                type="submit"
+                hidden={isDisable}
+              >
+                Submit
+              </Button>
+            </Flex>
           </Stack>
         </Form>
       )}
