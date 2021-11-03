@@ -12,6 +12,8 @@ import {
   Icon,
   useClipboard,
   Flex,
+  SimpleGrid,
+  HStack,
 } from '@chakra-ui/react'
 import { fetchProject } from '@/slices/projects'
 import { fetchFileListByProject } from '@/slices/file_list'
@@ -19,8 +21,9 @@ import { fetchContractByProject } from '@/slices/contract'
 import { fetchDeliverTaskByProject } from '@/slices/deliver_task'
 import { GiSofa } from 'react-icons/gi'
 import { hostname } from '@/utils/hostname'
+import { formatDate } from '@/utils/date'
+import { CopyIcon } from '@chakra-ui/icons'
 import FileTable from '../../../components/projects/FileTable'
-import ContractTable from '../../../components/projects/ContractTable'
 import DeliverTaskTable from '../../../components/projects/DeliverTaskTable'
 
 const ProjectDetails = () => {
@@ -28,6 +31,8 @@ const ProjectDetails = () => {
   const { id } = router.query
   const dispatch = useAppDispatch()
   const { project } = useAppSelector((state) => state.projects)
+  const { contractByProject } = useAppSelector((state) => state.contracts)
+  const { deliverTasks } = useAppSelector((state) => state.deliverTasks)
   const { hasCopied, onCopy } = useClipboard(
     `${hostname}/customer/furnitures/${id}`,
   )
@@ -50,16 +55,47 @@ const ProjectDetails = () => {
       <NavBar />
       <Container maxW="container.xl">
         <Flex>
-          <Heading>{project.name}</Heading>
-          <Button
-            marginLeft="auto"
-            colorScheme="green"
-            onClick={() => router.push(`/projects/${id}/update`)}
-          >
-            แก้ไขโปรเจค
-          </Button>
+          <Heading py="4">{project.name}</Heading>
+          <HStack marginLeft="auto">
+            <Button
+              colorScheme="green"
+              onClick={() => router.push(`/projects/${id}/update`)}
+            >
+              แก้ไขโปรเจค
+            </Button>
+            <Button
+              colorScheme="green"
+              onClick={() => router.push(`/projects/${id}/contract`)}
+            >
+              แก้สัญญา
+            </Button>
+          </HStack>
         </Flex>
-        <Text>State: {project?.status}</Text>
+        <SimpleGrid columns={2} spacing="4" maxW="md">
+          <Heading size="sm">State:</Heading>
+          <Text>{project?.status}</Text>
+
+          <Heading size="sm">Customer:</Heading>
+          <Text>
+            {project.customer?.name} Tel.
+            {project.customer?.phone}
+          </Text>
+
+          <Heading size="sm">Start date: </Heading>
+          <Text>{formatDate(project?.started_when)}</Text>
+
+          <Heading size="sm">Estimated date:</Heading>
+          <Text>{formatDate(project?.estimated_when)}</Text>
+
+          <Heading size="sm">Compensation:</Heading>
+          <Text>{contractByProject?.compensation}</Text>
+
+          <Heading size="sm">Installment:</Heading>
+          <Text>
+            {`${deliverTasks?.length}/`}
+            {contractByProject?.installment}
+          </Text>
+        </SimpleGrid>
         <Divider />
 
         <Icon as={GiSofa} fontSize="3xl" mx="2" />
@@ -71,12 +107,13 @@ const ProjectDetails = () => {
           View Project funitures
         </Button>
         <Button onClick={onCopy} ml={2}>
+          <CopyIcon />
           {hasCopied ? 'Copied' : 'คัดลอกลิงค์ สำหรับลูกค้าเลือกเฟอร์นิเจอร์'}
         </Button>
         <Divider />
 
-        <ContractTable project_id={Number(id)} />
-        <Divider />
+        {/* <ContractTable project_id={Number(id)} />
+        <Divider /> */}
 
         <FileTable project_id={Number(id)} />
         <Divider />

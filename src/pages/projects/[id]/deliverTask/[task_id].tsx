@@ -25,9 +25,10 @@ import {
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { Column } from 'react-table'
-import { AddIcon } from '@chakra-ui/icons'
+import { CopyIcon } from '@chakra-ui/icons'
 import { createReceiptByTaskId, fetchReceiptByTaskId } from '@/slices/receipts'
 import { hostname } from '@/utils/hostname'
+import NavBar from '@/components/NavBar'
 
 const columns: Column<Partial<Receipt>>[] = [
   {
@@ -96,6 +97,7 @@ const DeliverTaskEditPage = () => {
 
   return (
     <PageLayout windowTitle="Deliver Task">
+      <NavBar />
       <Container maxW="container.xl">
         {!deliverTasksLoading && (
           <DeliverTaskForm onSubmit={onSubmit} initialValues={deliverTask} />
@@ -104,8 +106,9 @@ const DeliverTaskEditPage = () => {
       <Container maxW="container.xl" pt="12">
         <Stack>
           <Flex>
-            <Heading>Receipts list</Heading>
+            <Heading>ใบเสร็จรับเงิน</Heading>
             <Button onClick={onCopy} ml={2}>
+              <CopyIcon />
               {hasCopied ? 'Copied' : 'คัดลอกลิงค์ สำหรับลูกค้าส่งใบเสร็จ'}
             </Button>
           </Flex>
