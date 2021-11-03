@@ -61,7 +61,7 @@ const ProjectForm: React.FC<Props> = ({
           <Field name="name">
             {({ field }: { field: FieldMetaProps<any> }) => (
               <FormControl isInvalid={(errors.name && touched.name) || false}>
-                <FormLabel htmlFor="name">Project Name</FormLabel>
+                <FormLabel htmlFor="name">Project Name *</FormLabel>
                 <Input {...field} id="name" placeholder="name" />
                 <FormErrorMessage>{errors.name}</FormErrorMessage>
               </FormControl>
@@ -73,7 +73,9 @@ const ProjectForm: React.FC<Props> = ({
               (errors.estimated_when && touched.estimated_when) || false
             }
           >
-            <FormLabel htmlFor="estimated_when">estimated_when</FormLabel>
+            <FormLabel htmlFor="estimated_when">
+              วันที่คาดว่าจะสำเร็จ *
+            </FormLabel>
             <DatePicker
               id="estimated_when"
               value={values.estimated_when}
@@ -88,7 +90,7 @@ const ProjectForm: React.FC<Props> = ({
           <FormControl
             isInvalid={(errors.started_when && touched.started_when) || false}
           >
-            <FormLabel htmlFor="started_when">started_when</FormLabel>
+            <FormLabel htmlFor="started_when">วันที่เริ่มงาน *</FormLabel>
             <DatePicker
               id="started_when"
               value={values.started_when}
@@ -104,7 +106,7 @@ const ProjectForm: React.FC<Props> = ({
               <FormControl
                 isInvalid={(errors.status && touched.status) || false}
               >
-                <FormLabel htmlFor="status">Status</FormLabel>
+                <FormLabel htmlFor="status">Status *</FormLabel>
                 <Select {...field} id="status" placeholder="Select option">
                   {Object.values(ProjectState).map((state) => (
                     <option value={state} key={state}>
@@ -122,7 +124,7 @@ const ProjectForm: React.FC<Props> = ({
                 isInvalid={(errors.customer && touched.customer) || false}
               >
                 <FormLabel htmlFor="customer.customer_id">
-                  Customer name
+                  Customer name *
                 </FormLabel>
                 <Select
                   {...field}

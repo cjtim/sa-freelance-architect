@@ -15,8 +15,11 @@ const ProjectCreate = () => {
 
   const handleSubmit = async (values: Project) => {
     if (values.name) {
-      await dispatch(createProject(values))
-      router.push('/projects')
+      const action = await dispatch(createProject(values))
+      if (action.meta.requestStatus === 'fulfilled') {
+        const projects = action.payload as Project[]
+        if (projects[0]) router.push(`/projects/${projects[0].project_id}`)
+      }
     }
   }
   useEffect(() => {
