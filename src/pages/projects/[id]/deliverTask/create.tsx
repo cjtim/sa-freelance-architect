@@ -23,7 +23,9 @@ const DeliverTaskCreatePage = () => {
       }),
     )
     if (action.meta.requestStatus === 'fulfilled') {
-      router.push(`/projects/${Number(id)}`)
+      const deliverTasks = action.payload as DeliverTask[]
+      if (deliverTasks[0])
+        router.push(`/projects/${id}/deliverTask/${deliverTasks[0].task_id}`)
     }
   }
 

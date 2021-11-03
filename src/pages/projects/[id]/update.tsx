@@ -1,10 +1,11 @@
+import NavBar from '@/components/NavBar'
 import PageLayout from '@/components/PageLayout'
 import ProjectForm from '@/components/projects/ProjectForm'
 import { Project } from '@/pages/api/entity'
 import { fetchCustomers } from '@/slices/customer'
 import { updateProject, fetchProject } from '@/slices/projects'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { Container } from '@chakra-ui/react'
+import { Container, Heading } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
@@ -33,6 +34,8 @@ const UpdateProject: React.FC = () => {
   return (
     <PageLayout windowTitle="update project">
       <Container maxW="container.xl">
+        <NavBar />
+        <Heading py="4">แก้ไขโปรเจค {project?.name}</Heading>
         {!projectLoading && !customerLoading && project?.project_id && (
           <ProjectForm
             customers={customers}

@@ -13,6 +13,8 @@ import {
   FormLabel,
   Input,
   Stack,
+  Heading,
+  Flex,
 } from '@chakra-ui/react'
 import { Field, FieldMetaProps, Form, Formik, FormikProps } from 'formik'
 import NavBar from '@/components/NavBar'
@@ -38,6 +40,7 @@ const ContractByProjectPage: React.FC = () => {
       <PageLayout windowTitle="Contract">
         <Container maxW="container.xl">
           <NavBar />
+          <Heading py="4">แก้ไขสัญญา </Heading>
           <Formik
             initialValues={contractByProject}
             validationSchema={Yup.object().shape({
@@ -103,14 +106,24 @@ const ContractByProjectPage: React.FC = () => {
                       </FormControl>
                     )}
                   </Field>
-                  <Button
-                    mt={4}
-                    colorScheme="teal"
-                    isLoading={isSubmitting}
-                    type="submit"
-                  >
-                    Submit
-                  </Button>
+                  <Flex>
+                    <Button
+                      mt={4}
+                      mr={4}
+                      colorScheme="red"
+                      onClick={() => router.back()}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      mt={4}
+                      colorScheme="teal"
+                      isLoading={isSubmitting}
+                      type="submit"
+                    >
+                      Submit
+                    </Button>
+                  </Flex>
                 </Stack>
               </Form>
             )}
