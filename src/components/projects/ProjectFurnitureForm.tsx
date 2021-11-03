@@ -88,7 +88,7 @@ const ProjectFurnitureForm: React.FC<Props> = ({ project_id }) => {
 
   return (
     <>
-      <Flex>
+      <Flex py="2">
         <Box w="100%">
           <Select
             defaultValue={selected}

@@ -94,7 +94,7 @@ const DeliverTaskEditPage = () => {
 
   return (
     <PageLayout windowTitle="Deliver Task">
-      <Container maxW="container.xl">
+      <Container maxW="container.xl" pt="18">
         {!deliverTasksLoading && (
           <DeliverTaskForm
             onSubmit={onSubmit}
