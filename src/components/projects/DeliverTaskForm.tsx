@@ -32,7 +32,7 @@ const DeliverTaskForm: React.FC<Props> = ({
   isDisable = false,
 }) => (
   <Container maxW="container.xl">
-    <Heading>ข้อมูลการส่งงาน</Heading>
+    <Heading>รายละเอียดงวด การส่งงาน</Heading>
     <Formik
       initialValues={initialValues}
       validationSchema={Yup.object().shape({

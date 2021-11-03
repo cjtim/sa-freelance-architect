@@ -38,7 +38,7 @@ const FurnitureCreate = () => {
           validationSchema={Yup.object().shape({
             furniture_name: Yup.string()
               .min(2, 'Too Short!')
-              .max(50, 'Too Long!')
+              .max(200, 'Too Long!')
               .required('Required'),
             height: Yup.number().required(),
             length: Yup.number().required(),

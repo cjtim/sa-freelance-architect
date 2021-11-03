@@ -15,6 +15,7 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { Field, FieldMetaProps, Form, Formik, FormikProps } from 'formik'
+import NavBar from '@/components/NavBar'
 
 const ContractByProjectPage: React.FC = () => {
   const router = useRouter()
@@ -36,6 +37,7 @@ const ContractByProjectPage: React.FC = () => {
     () => (
       <PageLayout windowTitle="Contract">
         <Container maxW="container.xl">
+          <NavBar />
           <Formik
             initialValues={contractByProject}
             validationSchema={Yup.object().shape({

@@ -1,9 +1,11 @@
 import backendInstance from '@/lib/axios'
 import { apiEndpoints } from '@/config'
 import {
-  AnyAction,
   createAsyncThunk,
   createSlice,
+  isFulfilled,
+  isPending,
+  isRejected,
   PayloadAction,
 } from '@reduxjs/toolkit'
 import { DeliverTask } from '@/pages/api/entity'
@@ -74,6 +76,15 @@ export const DeliverTaskSlice = createSlice({
           state.deliverTask = action.payload
         },
       )
+      .addMatcher(isPending(), (state) => {
+        state.loading = true
+      })
+      .addMatcher(isFulfilled(), (state) => {
+        state.loading = false
+      })
+      .addMatcher(isRejected(), (state) => {
+        state.loading = false
+      })
   },
 })
 

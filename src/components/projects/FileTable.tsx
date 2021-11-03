@@ -43,7 +43,7 @@ const FileTable: React.FC<Props> = ({ project_id }) => {
           file,
         }),
       )
-      router.reload()
+      dispatch(fetchFileListByProject(project_id))
     }
   }
 
