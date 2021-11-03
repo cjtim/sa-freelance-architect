@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { fetchFurnitures } from '@/slices/funiture'
 import ProjectFurnitureForm from '@/components/projects/ProjectFurnitureForm'
-import { Container } from '@chakra-ui/react'
+import { Container, Heading } from '@chakra-ui/react'
 
 const ProjectFurniturePage = () => {
   const dispatch = useAppDispatch()
@@ -20,7 +20,8 @@ const ProjectFurniturePage = () => {
 
   return (
     <PageLayout windowTitle="Contract">
-      <Container maxW="container.xl">
+      <Container maxW="container.xl" pt="18">
+        <Heading size="lg">เลือกเฟอร์นิเจอร์ที่ใช้ในโปรเจค</Heading>
         <ProjectFurnitureForm project_id={Number(project_id)} />
       </Container>
     </PageLayout>
